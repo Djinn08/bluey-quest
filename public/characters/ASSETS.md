@@ -1,23 +1,43 @@
-# Jaydan Edition Character Assets
+# Character Asset Registry (Jaydan Edition v0.2)
 
-## Home page characters
+All images use transparency, `object-contain`, and no placeholder frames.
 
-- `bluey.png` — Bluey (guide, encouragement, adventure)
-- `bingo.png` — Bingo (comfort, flare days, rest)
-- `muffin.png` — Muffin (chaos, easter eggs, rewards)
+## Bluey
 
-## Easter eggs
+| File | Use |
+|------|-----|
+| `bluey-default.png` | Default encouragement, interactions |
+| `bluey-heart.png` | Flare Day, streak milestones |
+| `bluey-shock.png` | Special states (reserved) |
 
-- `muffinFlamingoQueen.png` — Flamingo Queen Muffin (Muffin Mode / Sneak Peek reward)
+## Bingo
 
-## Bug Inspector (Muffin 3 ONLY)
+| File | Use |
+|------|-----|
+| `bingo-default.png` | Default encouragement |
+| `bingo-happy.png` | Daily task completed |
+| `bingo-balloon.png` | Special states (reserved) |
 
-- `muffin3.png` — Official Bug Inspector character for all bug report UI
+## Muffin
 
-Do not use generic bug icons or `buginspector.png` for Bug Inspector pages.
+| File | Use |
+|------|-----|
+| `muffin-default.webp` | Default encouragement (PNG fallback: `muffin-default.png`) |
+| `muffin-buginspector.png` | Bug Inspector FAB, modal, success, Senior Inspector |
+| `flamingo-queen.png` | Flamingo Queen unlocked state (Gladys) |
+| `muffin-flamingo-ride.png` | Flamingo Queen celebration modal |
 
-The app prefers PNG and falls back to SVG only when a PNG is missing.
+## App Icon
 
-Optional sound files (future):
+| File | Use |
+|------|-----|
+| `../icons/blueydollarbuck.png` | Source for all PWA icons (`npm run icons`) |
 
-- `../sounds/muffin-giggle.mp3`
+## Processing
+
+```bash
+npm run assets   # copy + transparency from Cursor assets folder
+npm run icons    # regenerate icon sizes from Dollarbuck
+```
+
+Registry source of truth: `src/lib/characters/index.ts` → `CHARACTER_ASSETS`

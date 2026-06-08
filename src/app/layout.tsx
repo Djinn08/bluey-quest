@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
+import { APP_NAME } from "@/lib/characters";
 import { RegisterSW } from "@/components/pwa/RegisterSW";
 import { SplashScreen } from "@/components/pwa/SplashScreen";
 import "./globals.css";
@@ -11,14 +12,14 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Bluey Quest",
+  title: APP_NAME,
   description:
-    "Healthy habits through cozy gamification — Dollarbucks, Keepy Uppy streaks, and gentle encouragement.",
+    "Healthy habits. Cozy rewards. One day at a time. — Dollarbucks, Keepy Uppy streaks, and gentle encouragement.",
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Bluey Quest",
+    title: APP_NAME,
   },
   icons: {
     icon: [

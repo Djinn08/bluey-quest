@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { APP_NAME } from "@/lib/characters";
 
 interface AppShellProps {
   children: ReactNode;
@@ -7,7 +8,7 @@ interface AppShellProps {
   greeting?: string | null;
 }
 
-export function AppShell({ children, title = "Bluey Quest", greeting }: AppShellProps) {
+export function AppShell({ children, title = APP_NAME, greeting }: AppShellProps) {
   return (
     <div className="min-h-dvh bg-gradient-to-b from-sky-100 via-sky-50 to-orange-50">
       <header className="sticky top-0 z-30 border-b border-sky-100/80 bg-sky-50/90 px-4 py-4 backdrop-blur">

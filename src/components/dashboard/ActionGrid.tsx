@@ -45,6 +45,7 @@ export function ActionGrid({ completedToday }: ActionGridProps) {
       if (result.success) {
         setLocalCompleted((prev) => new Set(prev).add(actionType));
         setJustCompleted(actionType);
+        window.dispatchEvent(new CustomEvent("bluey-quest:action-completed"));
         setFloatingReward(result.rewardEarned);
         if (result.chaosEvent) {
           setChaosModal(result.chaosEvent);

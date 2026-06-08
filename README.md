@@ -165,6 +165,43 @@ The Jaydan Edition serves as the prototype and testing ground for future version
 - Serwist (PWA / service worker)
 - Vercel-ready deployment
 
+## Branding
+
+App name everywhere: **Bluey Quest** (exact capitalization).
+
+Used in app title, splash screen, manifest, metadata, browser tab, and install prompt. Title font: Nunito (rounded, playful).
+
+## Character Asset Registry
+
+Central registry: `src/lib/characters/index.ts` → `CHARACTER_ASSETS`  
+File guide: [public/characters/ASSETS.md](./public/characters/ASSETS.md)
+
+| Character | Assets |
+|-----------|--------|
+| Bluey | `bluey-default`, `bluey-heart`, `bluey-shock` |
+| Bingo | `bingo-default`, `bingo-happy`, `bingo-balloon` |
+| Muffin | `muffin-default`, `muffin-buginspector`, `flamingo-queen`, `muffin-flamingo-ride` |
+
+**Global image rules:** transparency, `object-contain`, no circles/frames/borders.
+
+## Companion Encouragement Card
+
+The dashboard encouragement card is a character check-in — not a trading card.
+
+- Random Bluey / Bingo / Muffin on load with character-specific quotes
+- Tap character for a new quote from that companion
+- Character overlaps top-left of gradient card (110–140px)
+- Special states: Bingo Happy (task done), Bluey Heart (flare/milestone), Flamingo Queen (Muffin Mode)
+
+## Dollarbuck App Icon
+
+Official icon: `public/icons/blueydollarbuck.png` (transparent background).
+
+```bash
+npm run icons    # regenerate 48–512px sizes + src/app/icon.png
+npm run assets   # refresh character PNGs from assets folder
+```
+
 ## Features (Jaydan Edition — v0.1 + v0.2 in progress)
 
 - Email/password auth with persistent sessions
@@ -174,10 +211,11 @@ The Jaydan Edition serves as the prototype and testing ground for future version
 - Food history with CSV export
 - Keepy Uppy streak & bonus tiers
 - Character themes (Bluey / Bingo / Muffin) with persistence
-- Tap-to-interact characters (Bluey, Bingo, Muffin) with optional sounds
-- **Bug Inspector Muffin** — playful bug reports via `muffin3.png`
-- Sneak Peek → Muffin Mode / **Flamingo Queen** easter egg
-- Dollarbuck PWA icon, splash screen, installable PWA with offline-friendly caching
+- Companion encouragement card with tap-for-quote interactions
+- Character sounds toggle (Settings)
+- **Bug Inspector Muffin** — `muffin-buginspector.png` only
+- Sneak Peek → **Flamingo Queen** easter egg (`muffin-flamingo-ride.png`)
+- Dollarbuck PWA icon (transparent), polished splash screen, installable PWA
 
 ## Getting Started
 
@@ -289,7 +327,7 @@ Placeholder stubs live under `src/lib/features/`. Items below are planned only �
 
 #### Bug Inspector System *(shipped)*
 
-Official character: `public/characters/muffin3.png` (**Muffin 3** — not generic bug icons)
+Official character: `public/characters/muffin-buginspector.png` (not generic bug icons)
 
 - Playful bug report FAB and modal: **🐶 Bug Inspector Muffin**
 - Random subtext: *"Tell me what's broken!"* / *"Muffin is investigating..."* / *"This is UNACCEPTABLE!"*
@@ -390,8 +428,9 @@ Before Jaydan returns:
 - [x] PWA manifest with full icon set
 - [x] Splash screen
 - [x] Character images integrated (PNG-first, larger home display)
-- [x] Bug Inspector Muffin (`muffin3.png`)
-- [x] Flamingo Queen asset + Muffin Mode modal (`muffinFlamingoQueen.png`)
+- [x] Bug Inspector Muffin (`muffin-buginspector.png`)
+- [x] Flamingo Queen celebration modal + companion card states
+- [x] Character asset registry + encouragement card redesign
 - [x] Flamingo Queen documented
 - [ ] Vercel deployment stable
 - [ ] Core testing completed

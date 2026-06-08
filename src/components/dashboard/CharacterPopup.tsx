@@ -62,14 +62,14 @@ export function CharacterPopup() {
         }`}
       >
         <div className="flex flex-col items-center text-center">
-          <div className="relative h-28 w-28">
+          <div className="relative mx-auto h-32 w-32">
             <CharacterImage
               src={character.image}
               fallback={character.imageFallback}
               alt={entry.name}
-              width={112}
-              height={112}
-              className="object-contain"
+              width={128}
+              height={128}
+              className="object-contain drop-shadow-sm"
             />
           </div>
           <h2 id="character-popup-title" className="mt-3 text-lg font-extrabold text-sky-900">

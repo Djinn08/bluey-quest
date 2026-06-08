@@ -1,6 +1,5 @@
 import { ActionGrid } from "@/components/dashboard/ActionGrid";
 import { CharacterEncouragementCard } from "@/components/dashboard/CharacterEncouragementCard";
-import { CharacterInteractions } from "@/components/dashboard/CharacterInteractions";
 import { CharacterPopup } from "@/components/dashboard/CharacterPopup";
 import { FlareModeButton } from "@/components/dashboard/FlareModeButton";
 import { LogFoodSection } from "@/components/dashboard/LogFoodSection";
@@ -52,9 +51,11 @@ export default async function DashboardPage() {
         multiplier={multiplier}
       />
 
-      <CharacterEncouragementCard />
-
-      <CharacterInteractions />
+      <CharacterEncouragementCard
+        flareActive={flareActive}
+        streakDays={streakDays}
+        hasCompletedToday={completedToday.length > 0}
+      />
 
       {flareActive && (
         <div className="rounded-2xl bg-violet-100 px-4 py-3 text-center text-sm font-semibold text-violet-900">

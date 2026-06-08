@@ -6,6 +6,7 @@ import { activateMuffinMode } from "@/app/actions/easter-egg";
 import { Button } from "@/components/ui/Button";
 import { ConfettiBurst } from "@/components/ui/ConfettiBurst";
 import { CharacterImage } from "@/components/ui/CharacterImage";
+import { CHARACTER_ASSETS } from "@/lib/characters";
 
 const STORAGE_KEY = "bluey-quest-sneak-peek-count";
 const ACTIVATED_KEY = "bluey-quest-muffin-mode";
@@ -102,22 +103,23 @@ export function SneakPeekButton() {
       )}
 
       {modalMode === "muffin" && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-sky-950/50 p-4">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-purple-950/60 p-4">
           <div
-            className="animate-bounce-in max-w-sm rounded-3xl bg-gradient-to-br from-orange-100 to-pink-100 p-6 text-center shadow-2xl"
+            className="animate-flamingo-glow animate-bounce-in max-w-sm rounded-3xl bg-gradient-to-br from-pink-100 via-purple-100 to-fuchsia-200 p-6 text-center shadow-2xl ring-4 ring-pink-300/50"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mx-auto w-48">
+            <div className="mx-auto w-52">
               <CharacterImage
-                src="/characters/muffinFlamingoQueen.png"
-                fallback="/characters/muffin3.png"
+                src={CHARACTER_ASSETS.muffin.flamingoRide}
+                fallback={CHARACTER_ASSETS.muffin.flamingoQueen}
                 alt="Flamingo Queen Muffin"
-                width={192}
-                height={192}
+                width={208}
+                height={208}
                 className="object-contain"
               />
             </div>
-            <p className="mt-4 text-2xl font-extrabold text-orange-600">FLAMINGO QUEEN HAS ARRIVED</p>
+            <p className="mt-4 text-2xl font-extrabold text-purple-800">ALL HAIL THE FLAMINGO QUEEN</p>
+            <p className="mt-2 text-base font-bold text-pink-700">Long live the ruler of chaos.</p>
             <p className="mt-2 text-lg font-bold text-sky-900">I AM THE FLAMINGO QUEEN.</p>
             {bonus > 0 && (
               <p className="mt-2 text-xl font-extrabold text-orange-500">+{bonus} Dollarbucks</p>
