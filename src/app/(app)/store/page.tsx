@@ -17,7 +17,7 @@ export default async function StorePage() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-sky-700">
+      <p className="text-theme-muted text-sm">
         Spend Dollarbucks on real-life treats — you earned every one.
       </p>
       <StoreGrid balance={profile?.dollarbucks_balance ?? 0} />

@@ -34,9 +34,10 @@ export function SplashScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50 transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[var(--bg)] transition-opacity duration-500 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
+      style={{ backgroundImage: "var(--bg-pattern)", backgroundSize: "88px 88px" }}
       aria-hidden
     >
       <div className="flex w-full max-w-sm flex-col items-center px-8 text-center">
@@ -50,7 +51,7 @@ export function SplashScreen() {
           priority
         />
 
-        <h1 className="mt-5 font-extrabold tracking-tight text-sky-900 text-4xl">
+        <h1 className="text-theme mt-5 text-4xl font-extrabold tracking-tight">
           {APP_NAME}
         </h1>
 
@@ -67,9 +68,11 @@ export function SplashScreen() {
         </div>
 
         <div className="mt-6 space-y-0.5">
-          <p className="text-base font-semibold text-sky-800">Healthy habits.</p>
-          <p className="text-base font-semibold text-sky-800">Cozy rewards.</p>
-          <p className="text-base font-semibold text-orange-700">One day at a time.</p>
+          <p className="text-theme-muted text-base font-semibold">Healthy habits.</p>
+          <p className="text-theme-muted text-base font-semibold">Cozy rewards.</p>
+          <p className="text-base font-semibold" style={{ color: "var(--streak-accent)" }}>
+            One day at a time.
+          </p>
         </div>
       </div>
     </div>

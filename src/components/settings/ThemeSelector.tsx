@@ -20,7 +20,7 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
 
   return (
     <div className="space-y-2">
-      <span className="block text-sm font-medium text-sky-800">Theme Preference</span>
+      <span className="text-theme-muted block text-sm font-medium">Theme Preference</span>
       <input type="hidden" name="theme_preference" value={value} />
       <div className="grid gap-3">
         {THEMES.map((theme) => {
@@ -32,8 +32,8 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
               onClick={() => handleSelect(theme.id)}
               className={`flex items-center gap-3 rounded-2xl border-2 p-3 text-left transition ${
                 selected
-                  ? "border-sky-500 bg-sky-50 ring-2 ring-sky-200"
-                  : "border-sky-200 bg-white hover:border-sky-300"
+                  ? "border-[var(--primary)] bg-[var(--card-alt)] ring-2 ring-[color-mix(in_srgb,var(--primary)_25%,transparent)]"
+                  : "border-[var(--input-border)] bg-[var(--card)] hover:border-[var(--primary-light)]"
               }`}
               aria-pressed={selected}
             >
@@ -48,7 +48,7 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
                 />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="font-bold text-sky-900">
+                <p className="text-theme font-bold">
                   {theme.emoji} {theme.name}
                 </p>
                 <div className="mt-1.5 flex gap-1">

@@ -72,15 +72,15 @@ export default async function DashboardPage() {
       <InstallPrompt />
 
       <section>
-        <h2 className="mb-3 text-lg font-bold text-sky-900">Daily Actions</h2>
-        <p className="mb-3 text-sm text-sky-700">
+        <h2 className="text-theme mb-3 text-lg font-bold">Daily Actions</h2>
+        <p className="text-theme-muted mb-3 text-sm">
           Tap when you complete a habit — consistency counts more than doing everything!
         </p>
         <ActionGrid completedToday={completedToday} />
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-bold text-sky-900">Food Log</h2>
+        <h2 className="text-theme mb-3 text-lg font-bold">Food Log</h2>
         <LogFoodSection />
       </section>
 

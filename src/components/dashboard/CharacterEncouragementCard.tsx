@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import { useSneakPeek } from "@/components/easter-egg/SneakPeekProvider";
 import { CharacterImage } from "@/components/ui/CharacterImage";
 import {
-  COMPANION_GRADIENTS,
   COMPANION_NAMES,
   FLARE_SUPPORT_QUOTES,
   getCompanionImage,
@@ -141,11 +140,9 @@ export function CharacterEncouragementCard({
           />
         </div>
 
-        <div
-          className={`rounded-3xl bg-gradient-to-br ${COMPANION_GRADIENTS[companion]} pl-28 pr-5 py-5 shadow-md shadow-sky-200/60`}
-        >
-          <p className="text-sm font-semibold text-sky-800/90">{COMPANION_NAMES[companion]} says:</p>
-          <p className="mt-1 text-2xl font-extrabold leading-snug text-sky-950">{quote}</p>
+        <div className="bg-theme-encouragement rounded-3xl pl-28 pr-5 py-5">
+          <p className="text-theme-muted text-sm font-semibold">{COMPANION_NAMES[companion]} says:</p>
+          <p className="text-theme mt-1 text-2xl font-extrabold leading-snug">{quote}</p>
         </div>
       </button>
     </div>

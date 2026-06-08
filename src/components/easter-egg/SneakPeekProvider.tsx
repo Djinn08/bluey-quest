@@ -197,7 +197,7 @@ export function SneakPeekButton() {
     <button
       type="button"
       onClick={registerTap}
-      className="mx-auto block min-h-10 rounded-full px-4 text-sm font-semibold text-sky-600 underline-offset-2 transition hover:bg-sky-50 hover:text-sky-800 hover:underline"
+      className="text-[var(--primary)] mx-auto block min-h-10 rounded-full px-4 text-sm font-semibold underline-offset-2 transition hover:bg-[var(--card-alt)] hover:underline"
     >
       👀 Sneak Peek ({tapCount}/5)
     </button>

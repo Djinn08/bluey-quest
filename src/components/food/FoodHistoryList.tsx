@@ -30,7 +30,7 @@ export function FoodHistoryList({ entries }: FoodHistoryListProps) {
   if (entries.length === 0) {
     return (
       <Card>
-        <p className="text-center text-sky-700">
+        <p className="text-theme-muted text-center">
           No food logged yet. Tap Log Food on the home screen to get started!
         </p>
       </Card>
@@ -43,16 +43,16 @@ export function FoodHistoryList({ entries }: FoodHistoryListProps) {
         const dayEntries = grouped.get(date)!;
         return (
           <Card key={date}>
-            <h3 className="mb-4 text-lg font-bold text-sky-900">
+            <h3 className="text-theme mb-4 text-lg font-bold">
               {formatDateLabel(date)}
             </h3>
             <ul className="space-y-4">
               {dayEntries.map((entry) => (
-                <li key={entry.id} className="border-b border-sky-100 pb-4 last:border-0 last:pb-0">
-                  <p className="text-sm font-semibold text-sky-600">
+                <li key={entry.id} className="border-b border-[var(--card-ring)] pb-4 last:border-0 last:pb-0">
+                  <p className="text-theme-muted text-sm font-semibold">
                     {formatTime(entry.logged_at)}
                   </p>
-                  <p className="mt-0.5 text-base font-medium text-sky-900">
+                  <p className="text-theme mt-0.5 text-base font-medium">
                     {entry.food_name}
                   </p>
                 </li>

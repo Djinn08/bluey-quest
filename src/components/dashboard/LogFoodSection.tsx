@@ -34,7 +34,7 @@ export function LogFoodSection() {
     <>
       {message && (
         <p
-          className={`animate-fade-in text-center text-sm font-medium ${message.includes("Could not") || message.includes("Please") ? "text-orange-900" : "text-sky-800"}`}
+          className={`animate-fade-in text-center text-sm font-medium ${message.includes("Could not") || message.includes("Please") ? "text-warning" : "text-theme-muted"}`}
           role={message.includes("Could not") ? "alert" : "status"}
         >
           {message}
@@ -47,20 +47,20 @@ export function LogFoodSection() {
       <Modal open={open} onClose={() => setOpen(false)} title="Log Food">
         <div className="space-y-4">
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-sky-800">Food Name</span>
+            <span className="text-theme-muted mb-2 block text-sm font-medium">Food Name</span>
             <input
               type="text"
               value={foodName}
               onChange={(e) => setFoodName(e.target.value)}
               placeholder="What did you enjoy?"
-              className="w-full rounded-2xl border-2 border-sky-200 px-4 py-4 text-lg text-sky-900 placeholder:text-sky-400 focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-300"
+              className="themed-input w-full rounded-2xl px-4 py-4 text-lg placeholder:opacity-50"
               autoFocus
               onKeyDown={(e) => {
                 if (e.key === "Enter" && foodName.trim()) handleSave();
               }}
             />
           </label>
-          <p className="text-xs text-sky-600">Examples: {FOOD_EXAMPLES.join(", ")}</p>
+          <p className="text-theme-muted text-xs">Examples: {FOOD_EXAMPLES.join(", ")}</p>
           <Button
             fullWidth
             disabled={!foodName.trim() || pending}

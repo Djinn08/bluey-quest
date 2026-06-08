@@ -9,26 +9,24 @@ interface StatsBannerProps {
 
 export function StatsBanner({ balance, streakDays, multiplier }: StatsBannerProps) {
   return (
-    <Card className="bg-gradient-to-br from-sky-50 to-orange-50">
+    <Card className="bg-theme-stats">
       <div className="space-y-4">
         <div>
-          <p className="text-sm font-medium text-sky-700">Current Dollarbucks</p>
-          <p className="text-4xl font-extrabold tracking-tight text-sky-900">
+          <p className="text-theme-muted text-sm font-medium">Current Dollarbucks</p>
+          <p className="text-theme text-4xl font-extrabold tracking-tight">
             {balance.toLocaleString()}
           </p>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <p className="text-sm font-medium text-sky-700">Keepy Uppy Streak</p>
-            <p className="text-2xl font-bold text-orange-600">
+            <p className="text-theme-muted text-sm font-medium">Keepy Uppy Streak</p>
+            <p className="text-2xl font-bold" style={{ color: "var(--streak-accent)" }}>
               {streakDays} {streakDays === 1 ? "Day" : "Days"}
             </p>
           </div>
           <div>
-            <p className="text-sm font-medium text-sky-700">Keepy Uppy Bonus</p>
-            <p className="text-2xl font-bold text-sky-600">
-              {formatMultiplier(multiplier)}
-            </p>
+            <p className="text-theme-muted text-sm font-medium">Keepy Uppy Bonus</p>
+            <p className="text-theme text-2xl font-bold">{formatMultiplier(multiplier)}</p>
           </div>
         </div>
       </div>

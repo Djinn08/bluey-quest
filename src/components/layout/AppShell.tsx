@@ -10,13 +10,13 @@ interface AppShellProps {
 
 export function AppShell({ children, title = APP_NAME, greeting }: AppShellProps) {
   return (
-    <div className="min-h-dvh bg-gradient-to-b from-sky-100 via-sky-50 to-orange-50">
-      <header className="sticky top-0 z-30 border-b border-sky-100/80 bg-sky-50/90 px-4 py-4 backdrop-blur">
-        <h1 className="text-center text-2xl font-extrabold tracking-tight text-sky-900">
+    <div className="min-h-dvh">
+      <header className="themed-header sticky top-0 z-30 px-4 py-4">
+        <h1 className="text-theme text-center text-2xl font-extrabold tracking-tight">
           {title}
         </h1>
         {greeting && (
-          <p className="mt-0.5 text-center text-sm font-medium text-sky-700">
+          <p className="text-theme-muted mt-0.5 text-center text-sm font-medium">
             Hi, {greeting}! 👋
           </p>
         )}

@@ -19,7 +19,7 @@ export default async function TransactionsPage() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-sky-700">Your Dollarbucks wins — newest first.</p>
+      <p className="text-theme-muted text-sm">Your Dollarbucks wins — newest first.</p>
       <TransactionList transactions={(transactions ?? []) as Transaction[]} />
     </div>
   );

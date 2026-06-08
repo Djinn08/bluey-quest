@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import { DEFAULT_THEME } from "@/lib/themes";
+import { applyThemeTokens } from "@/lib/themeTokens";
 import type { ThemePreference } from "@/lib/types/database";
 
 const THEME_STORAGE_KEY = "bluey-quest-theme";
@@ -50,12 +51,16 @@ export function ThemeProvider({
   }, [serverSounds]);
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    applyThemeTokens(serverTheme);
+  }, [serverTheme]);
+
+  useEffect(() => {
+    applyThemeTokens(theme);
   }, [theme]);
 
   const setTheme = useCallback((next: ThemePreference) => {
     setThemeState(next);
-    document.documentElement.setAttribute("data-theme", next);
+    applyThemeTokens(next);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
     } catch {

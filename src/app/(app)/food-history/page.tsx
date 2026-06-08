@@ -19,7 +19,7 @@ export default async function FoodHistoryPage() {
 
   return (
     <div className="space-y-4">
-      <p className="text-sm text-sky-700">
+      <p className="text-theme-muted text-sm">
         A simple record of what you ate — no numbers, no judgment.
       </p>
       <FoodHistoryList entries={(entries ?? []) as FoodEntry[]} />

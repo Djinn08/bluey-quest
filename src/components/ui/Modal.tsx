@@ -24,17 +24,17 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end justify-center bg-sky-950/40 p-4 sm:items-center"
+      className="fixed inset-0 z-50 flex items-end justify-center bg-[color-mix(in_srgb,var(--text)_35%,transparent)] p-4 sm:items-center"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-md animate-slide-up rounded-3xl bg-white p-6 shadow-xl"
+        className="themed-card w-full max-w-md animate-slide-up rounded-3xl p-6"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 id="modal-title" className="mb-4 text-xl font-bold text-sky-900">
+        <h2 id="modal-title" className="text-theme mb-4 text-xl font-bold">
           {title}
         </h2>
         {children}

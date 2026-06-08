@@ -31,13 +31,13 @@ export function StoreGrid({ balance }: StoreGridProps) {
 
   return (
     <div className="space-y-4">
-      <Card className="bg-gradient-to-r from-orange-50 to-sky-50">
-        <p className="text-sm text-sky-700">Your balance</p>
-        <p className="text-3xl font-extrabold text-sky-900">{balance.toLocaleString()} Dollarbucks</p>
+      <Card className="bg-theme-stats">
+        <p className="text-theme-muted text-sm">Your balance</p>
+        <p className="text-theme text-3xl font-extrabold">{balance.toLocaleString()} Dollarbucks</p>
       </Card>
 
       {message && (
-        <p className="rounded-xl bg-emerald-50 px-4 py-2 text-center text-sm font-medium text-emerald-900" role="status">
+        <p className="bg-success rounded-xl px-4 py-2 text-center text-sm font-medium text-success" role="status">
           {message}
         </p>
       )}
@@ -50,9 +50,11 @@ export function StoreGrid({ balance }: StoreGridProps) {
             <Card key={item.id} className="flex items-center gap-4">
               <span className="text-3xl" aria-hidden>{item.emoji}</span>
               <div className="min-w-0 flex-1">
-                <p className="font-bold text-sky-900">{item.name}</p>
-                <p className="text-sm text-sky-700">{item.description}</p>
-                <p className="mt-1 font-semibold text-orange-600">{item.cost.toLocaleString()} DB</p>
+                <p className="text-theme font-bold">{item.name}</p>
+                <p className="text-theme-muted text-sm">{item.description}</p>
+                <p className="mt-1 font-semibold" style={{ color: "var(--streak-accent)" }}>
+                  {item.cost.toLocaleString()} DB
+                </p>
               </div>
               <Button
                 size="md"

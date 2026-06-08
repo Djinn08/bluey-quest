@@ -1,4 +1,5 @@
 import { CHARACTER_ASSETS } from "@/lib/characters";
+import { BLUEY_THEME, BINGO_THEME, MUFFIN_THEME } from "@/lib/themeTokens";
 import type { ThemePreference } from "@/lib/types/database";
 
 export interface ThemeConfig {
@@ -17,7 +18,7 @@ export const THEMES: ThemeConfig[] = [
     emoji: "🐶",
     characterImage: CHARACTER_ASSETS.bluey.default,
     characterImageFallback: CHARACTER_ASSETS.bluey.default,
-    previewColors: ["#0284c7", "#7dd3fc", "#ffffff"],
+    previewColors: [BLUEY_THEME["--primary"], BLUEY_THEME["--primary-light"], "#FFFBF5"],
   },
   {
     id: "bingo",
@@ -25,7 +26,7 @@ export const THEMES: ThemeConfig[] = [
     emoji: "🐶",
     characterImage: CHARACTER_ASSETS.bingo.default,
     characterImageFallback: CHARACTER_ASSETS.bingo.default,
-    previewColors: ["#ea580c", "#fef3c7", "#f5f0e6"],
+    previewColors: [BINGO_THEME["--primary"], BINGO_THEME["--primary-light"], "#FFFBF5"],
   },
   {
     id: "muffin",
@@ -33,7 +34,7 @@ export const THEMES: ThemeConfig[] = [
     emoji: "🐶",
     characterImage: CHARACTER_ASSETS.muffin.default,
     characterImageFallback: CHARACTER_ASSETS.muffin.default,
-    previewColors: ["#9333ea", "#e9d5ff", "#fbcfe8"],
+    previewColors: [MUFFIN_THEME["--primary"], MUFFIN_THEME["--primary-light"], "#FDF2F8"],
   },
 ];
 

@@ -39,7 +39,7 @@ export function FlareModeButton({ isActive }: FlareModeButtonProps) {
   return (
     <Card className={localActive ? "border-2 border-emerald-300 bg-emerald-50/80" : ""}>
       <div className="space-y-2">
-        <p className="text-sm font-medium text-sky-800">
+        <p className="text-theme-muted text-sm font-medium">
           {localActive
             ? "Today's goal is survival, not perfection."
             : "Having a rough day? Flare Day protects your streak and lowers expectations."}
@@ -60,7 +60,7 @@ export function FlareModeButton({ isActive }: FlareModeButtonProps) {
         )}
 
         {errorMsg && (
-          <p className="text-center text-sm text-orange-800" role="alert">
+          <p className="text-warning text-center text-sm" role="alert">
             {errorMsg}
           </p>
         )}

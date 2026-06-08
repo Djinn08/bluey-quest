@@ -39,8 +39,8 @@ export function InstallPrompt() {
   }
 
   return (
-    <div className="rounded-2xl bg-sky-100/90 px-4 py-3 ring-1 ring-sky-200">
-      <p className="text-sm font-medium text-sky-900">
+    <div className="themed-install rounded-2xl px-4 py-3">
+      <p className="text-theme text-sm font-medium">
         Install {APP_NAME} on your home screen — look for the Dollarbuck icon!
       </p>
       <div className="mt-2 flex gap-2">
@@ -49,7 +49,7 @@ export function InstallPrompt() {
         </Button>
         <button
           type="button"
-          className="min-h-12 rounded-2xl px-4 text-sm font-medium text-sky-700 hover:bg-sky-50"
+          className="text-theme-muted min-h-12 rounded-2xl px-4 text-sm font-medium hover:bg-[var(--card-alt)]"
           onClick={() => setDismissed(true)}
         >
           Not now

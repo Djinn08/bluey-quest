@@ -9,14 +9,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary:
-    "bg-sky-500 text-white hover:bg-sky-600 active:bg-sky-700 shadow-lg shadow-sky-200",
+    "bg-[var(--primary)] text-white hover:brightness-95 active:brightness-90 shadow-lg shadow-[color-mix(in_srgb,var(--primary)_25%,transparent)]",
   secondary:
-    "bg-orange-400 text-white hover:bg-orange-500 active:bg-orange-600 shadow-lg shadow-orange-200",
+    "bg-[var(--primary-light)] text-[var(--text)] hover:brightness-95 active:brightness-90 shadow-lg shadow-[color-mix(in_srgb,var(--primary-light)_35%,transparent)]",
   accent:
-    "bg-amber-100 text-amber-900 hover:bg-amber-200 active:bg-amber-300 ring-2 ring-amber-300",
+    "bg-[var(--card-alt)] text-[var(--text)] hover:brightness-95 ring-2 ring-[var(--accent)]",
   completed:
     "bg-emerald-500 text-white shadow-md shadow-emerald-200 ring-2 ring-emerald-400/50 cursor-default",
-  ghost: "bg-transparent text-sky-800 hover:bg-sky-50",
+  ghost: "bg-transparent text-[var(--text)] hover:bg-[var(--card-alt)]",
 };
 
 const sizes = {

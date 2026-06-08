@@ -66,7 +66,7 @@ export function ActionGrid({ completedToday }: ActionGridProps) {
       )}
 
       {errorMsg && (
-        <p className="animate-fade-in rounded-xl bg-orange-50 px-4 py-2 text-center text-sm font-medium text-orange-900" role="alert">
+        <p className="bg-warning animate-fade-in rounded-xl px-4 py-2 text-center text-sm font-medium text-warning" role="alert">
           {errorMsg}
         </p>
       )}
@@ -110,8 +110,8 @@ export function ActionGrid({ completedToday }: ActionGridProps) {
         {chaosModal && (
           <div className="space-y-4 text-center">
             <p className="text-4xl" aria-hidden>🐾</p>
-            <p className="text-lg font-bold text-orange-700">{chaosModal.message}</p>
-            <p className="text-2xl font-extrabold text-sky-900">+{chaosModal.bonus} Bonus Dollarbucks</p>
+            <p className="text-warning text-lg font-bold">{chaosModal.message}</p>
+            <p className="text-theme text-2xl font-extrabold">+{chaosModal.bonus} Bonus Dollarbucks</p>
             <Button fullWidth onClick={() => setChaosModal(null)}>
               Yay!
             </Button>

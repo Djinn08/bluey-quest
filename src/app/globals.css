@@ -1,22 +1,212 @@
 @import "tailwindcss";
 
+/* Fixed semantic colors — never change per theme */
 :root {
-  --background: #e0f2fe;
-  --foreground: #0c4a6e;
-  --sky-soft: #bae6fd;
-  --orange-warm: #fdba74;
+  --success: #10b981;
+  --success-bg: #ecfdf5;
+  --success-text: #065f46;
+  --error: #ef4444;
+  --error-bg: #fef2f2;
+  --error-text: #991b1b;
+  --warning: #f97316;
+  --warning-bg: #fff7ed;
+  --warning-text: #9a3412;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
   --font-sans: var(--font-nunito), system-ui, sans-serif;
 }
 
+/* Bluey theme (default) */
+html[data-theme="bluey"] {
+  --bg: #e8f4fc;
+  --bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'%3E%3Crect x='6' y='10' width='30' height='26' rx='13' fill='%231D9BF0' opacity='0.04'/%3E%3Crect x='48' y='34' width='26' height='22' rx='11' fill='%237CC7FF' opacity='0.04'/%3E%3Ccircle cx='22' cy='62' r='15' fill='%231D9BF0' opacity='0.035'/%3E%3Ccircle cx='68' cy='14' r='11' fill='%237CC7FF' opacity='0.03'/%3E%3C/svg%3E");
+  --card: #f7fbff;
+  --card-alt: #e0f2fe;
+  --primary: #1d9bf0;
+  --primary-light: #7cc7ff;
+  --text: #0c4a6e;
+  --text-muted: #0369a1;
+  --accent: #7cc7ff;
+  --header-bg: rgba(247, 251, 255, 0.92);
+  --header-border: rgba(125, 199, 255, 0.45);
+  --nav-bg: rgba(247, 251, 255, 0.96);
+  --nav-active-bg: #e0f2fe;
+  --nav-text: #0369a1;
+  --nav-active-text: #0c4a6e;
+  --input-border: #bae6fd;
+  --input-focus: #7cc7ff;
+  --card-ring: rgba(186, 230, 253, 0.9);
+  --card-shadow: rgba(29, 155, 240, 0.12);
+  --encouragement-from: #bae6fd;
+  --encouragement-via: #e0f2fe;
+  --encouragement-to: #ffffff;
+  --encouragement-shadow: rgba(29, 155, 240, 0.18);
+  --stats-from: #e0f2fe;
+  --stats-to: #fffdf8;
+  --streak-accent: #f97316;
+  --install-bg: rgba(224, 242, 254, 0.95);
+  --install-ring: rgba(125, 199, 255, 0.6);
+  --progress-track: #e0f2fe;
+  --progress-fill: #1d9bf0;
+}
+
+html[data-theme="bingo"] {
+  --bg: #fff8f0;
+  --bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'%3E%3Ccircle cx='22' cy='22' r='17' fill='%23F97316' opacity='0.04'/%3E%3Ccircle cx='62' cy='48' r='14' fill='%23FDBA74' opacity='0.04'/%3E%3Ccircle cx='38' cy='68' r='12' fill='%23F97316' opacity='0.035'/%3E%3Ccircle cx='72' cy='18' r='9' fill='%23FDBA74' opacity='0.03'/%3E%3C/svg%3E");
+  --card: #fffbf5;
+  --card-alt: #fef3c7;
+  --primary: #f97316;
+  --primary-light: #fdba74;
+  --text: #7c2d12;
+  --text-muted: #c2410c;
+  --accent: #fdba74;
+  --header-bg: rgba(255, 251, 245, 0.92);
+  --header-border: rgba(253, 186, 116, 0.5);
+  --nav-bg: rgba(255, 251, 245, 0.96);
+  --nav-active-bg: #fef3c7;
+  --nav-text: #c2410c;
+  --nav-active-text: #7c2d12;
+  --input-border: #fed7aa;
+  --input-focus: #fdba74;
+  --card-ring: rgba(254, 215, 170, 0.9);
+  --card-shadow: rgba(249, 115, 22, 0.12);
+  --encouragement-from: #fed7aa;
+  --encouragement-via: #fef3c7;
+  --encouragement-to: #fffbeb;
+  --encouragement-shadow: rgba(249, 115, 22, 0.16);
+  --stats-from: #fef3c7;
+  --stats-to: #fff7ed;
+  --streak-accent: #ea580c;
+  --install-bg: rgba(254, 243, 199, 0.95);
+  --install-ring: rgba(253, 186, 116, 0.6);
+  --progress-track: #fef3c7;
+  --progress-fill: #f97316;
+}
+
+html[data-theme="muffin"] {
+  --bg: #faf5ff;
+  --bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='88' height='88' viewBox='0 0 88 88'%3E%3Cellipse cx='26' cy='28' rx='20' ry='15' fill='%239333EA' opacity='0.04'/%3E%3Cellipse cx='58' cy='54' rx='16' ry='20' fill='%236B7280' opacity='0.04'/%3E%3Cellipse cx='70' cy='18' rx='12' ry='10' fill='%23E879F9' opacity='0.035'/%3E%3Ccircle cx='14' cy='66' r='10' fill='%239333EA' opacity='0.03'/%3E%3C/svg%3E");
+  --card: #fdfaff;
+  --card-alt: #f3e8ff;
+  --primary: #9333ea;
+  --primary-light: #e879f9;
+  --text: #581c87;
+  --text-muted: #7e22ce;
+  --accent: #e879f9;
+  --header-bg: rgba(253, 250, 255, 0.92);
+  --header-border: rgba(232, 121, 249, 0.4);
+  --nav-bg: rgba(253, 250, 255, 0.96);
+  --nav-active-bg: #f3e8ff;
+  --nav-text: #7e22ce;
+  --nav-active-text: #581c87;
+  --input-border: #e9d5ff;
+  --input-focus: #e879f9;
+  --card-ring: rgba(233, 213, 255, 0.9);
+  --card-shadow: rgba(147, 51, 234, 0.12);
+  --encouragement-from: #e9d5ff;
+  --encouragement-via: #f3e8ff;
+  --encouragement-to: #fdf2f8;
+  --encouragement-shadow: rgba(147, 51, 234, 0.18);
+  --stats-from: #f3e8ff;
+  --stats-to: #fdf2f8;
+  --streak-accent: #e879f9;
+  --install-bg: rgba(243, 232, 255, 0.95);
+  --install-ring: rgba(232, 121, 249, 0.55);
+  --progress-track: #f3e8ff;
+  --progress-fill: #9333ea;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg);
+  background-image: var(--bg-pattern);
+  background-size: 88px 88px;
+  color: var(--text);
   font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+/* Theme-aware utilities */
+.text-theme {
+  color: var(--text);
+}
+
+.text-theme-muted {
+  color: var(--text-muted);
+}
+
+.bg-theme-card {
+  background-color: var(--card);
+}
+
+.bg-theme-card-alt {
+  background-color: var(--card-alt);
+}
+
+.bg-theme-stats {
+  background: linear-gradient(to bottom right, var(--stats-from), var(--stats-to));
+}
+
+.bg-theme-encouragement {
+  background: linear-gradient(
+    to bottom right,
+    var(--encouragement-from),
+    var(--encouragement-via),
+    var(--encouragement-to)
+  );
+  box-shadow: 0 4px 14px var(--encouragement-shadow);
+}
+
+.themed-header {
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-border);
+  backdrop-filter: blur(10px);
+}
+
+.themed-nav {
+  background: var(--nav-bg);
+  border-top: 1px solid var(--header-border);
+  backdrop-filter: blur(10px);
+}
+
+.themed-input {
+  border: 2px solid var(--input-border);
+  color: var(--text);
+  background: var(--card);
+}
+
+.themed-input:focus {
+  border-color: var(--input-focus);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--input-focus) 35%, transparent);
+}
+
+.themed-card {
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+  box-shadow: 0 4px 14px var(--card-shadow);
+  border: 1px solid var(--card-ring);
+}
+
+.themed-install {
+  background: var(--install-bg);
+  border: 1px solid var(--install-ring);
+}
+
+.text-success {
+  color: var(--success-text);
+}
+
+.bg-success {
+  background-color: var(--success-bg);
+}
+
+.text-warning {
+  color: var(--warning-text);
+}
+
+.bg-warning {
+  background-color: var(--warning-bg);
 }
 
 @keyframes fade-in {
@@ -114,28 +304,6 @@ body {
 
 .animate-confetti-fall {
   animation: confetti-fall 2.5s ease-in forwards;
-}
-
-/* Theme variants — Jaydan Edition character themes */
-html[data-theme="bluey"] {
-  --background: #e0f2fe;
-  --foreground: #0c4a6e;
-  --sky-soft: #7dd3fc;
-  --orange-warm: #ffffff;
-}
-
-html[data-theme="bingo"] {
-  --background: #fff7ed;
-  --foreground: #9a3412;
-  --sky-soft: #fed7aa;
-  --orange-warm: #fef3c7;
-}
-
-html[data-theme="muffin"] {
-  --background: #faf5ff;
-  --foreground: #6b21a8;
-  --sky-soft: #e9d5ff;
-  --orange-warm: #fbcfe8;
 }
 
 @keyframes character-bounce {
