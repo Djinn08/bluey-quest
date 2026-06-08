@@ -2,8 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { ERRORS, formatSettingsError } from "@/lib/errors";
+import { ensureUserProfile } from "@/lib/profile/ensure-profile";
 import { createClient } from "@/lib/supabase/server";
-import { isValidTheme } from "@/lib/themes";
+import { isValidTheme, normalizeTheme } from "@/lib/themes";
 import type { ThemePreference } from "@/lib/types/database";
 
 export type SettingsResult = { error?: string; success?: boolean };
@@ -25,7 +26,9 @@ export async function updateSettings(
   const themeRaw = String(formData.get("theme_preference") ?? "bluey");
   const characterSounds = formData.get("character_sounds_enabled") === "on";
 
-  if (!isValidTheme(themeRaw)) {
+  const theme = normalizeTheme(themeRaw);
+
+  if (!isValidTheme(theme)) {
     return {
       error:
         process.env.NODE_ENV === "development"
@@ -34,17 +37,17 @@ export async function updateSettings(
     };
   }
 
-  const theme = themeRaw as ThemePreference;
+  await ensureUserProfile(supabase);
 
-  const payload = {
+  const updatePayload = {
     display_name: displayName || null,
-    theme_preference: theme,
+    theme_preference: theme as ThemePreference,
     character_sounds_enabled: characterSounds,
   };
 
   let { data, error } = await supabase
     .from("profiles")
-    .update(payload)
+    .update(updatePayload)
     .eq("id", user.id)
     .select("id")
     .maybeSingle();
@@ -64,12 +67,27 @@ export async function updateSettings(
     error = fallback.error;
   }
 
+  if (!error && !data) {
+    const insertResult = await supabase
+      .from("profiles")
+      .insert({
+        id: user.id,
+        display_name: displayName || null,
+        theme_preference: theme,
+        character_sounds_enabled: characterSounds,
+      })
+      .select("id")
+      .maybeSingle();
+    data = insertResult.data;
+    error = insertResult.error;
+  }
+
   if (error) {
     return { error: formatSettingsError(error) };
   }
 
   if (!data) {
-    const message = `No profile row found for user ${user.id}`;
+    const message = `Profile save returned no row for user ${user.id}`;
     console.error("[Settings save failed]", message);
     return {
       error:

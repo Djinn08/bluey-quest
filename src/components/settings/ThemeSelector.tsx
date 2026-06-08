@@ -37,13 +37,14 @@ export function ThemeSelector({ value, onChange }: ThemeSelectorProps) {
               }`}
               aria-pressed={selected}
             >
-              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-xl bg-white ring-2 ring-white/80">
+              <div className="relative h-14 w-14 shrink-0">
                 <CharacterImage
                   src={theme.characterImage}
                   fallback={theme.characterImageFallback}
                   alt={theme.name}
-                  fill
-                  sizes="56px"
+                  width={56}
+                  height={56}
+                  className="h-14 w-14 object-contain drop-shadow-sm"
                 />
               </div>
               <div className="min-w-0 flex-1">

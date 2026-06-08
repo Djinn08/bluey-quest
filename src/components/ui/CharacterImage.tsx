@@ -15,6 +15,7 @@ interface CharacterImageProps {
   priority?: boolean;
 }
 
+/** Serves character assets directly — no optimizer recompression or format conversion */
 export function CharacterImage({
   src,
   fallback,
@@ -38,6 +39,7 @@ export function CharacterImage({
       src={currentSrc}
       alt={alt}
       priority={priority}
+      unoptimized
       className={className}
       onError={() => {
         if (currentSrc !== fallback) setCurrentSrc(fallback);

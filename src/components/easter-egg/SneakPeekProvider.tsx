@@ -1,80 +1,116 @@
 "use client";
 
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useTransition,
+  type ReactNode,
+} from "react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
 import { activateMuffinMode } from "@/app/actions/easter-egg";
 import { Button } from "@/components/ui/Button";
 import { ConfettiBurst } from "@/components/ui/ConfettiBurst";
 import { CharacterImage } from "@/components/ui/CharacterImage";
-import { CHARACTER_ASSETS } from "@/lib/characters";
+import { CHARACTER_ASSETS, FLAMINGO_QUEEN_TITLE } from "@/lib/characters";
 
 const STORAGE_KEY = "bluey-quest-sneak-peek-count";
 const ACTIVATED_KEY = "bluey-quest-muffin-mode";
 const MUFFIN_CLICKS_REQUIRED = 5;
+const isDev = process.env.NODE_ENV === "development";
 
 type ModalMode = "preview" | "muffin" | null;
 
-export function SneakPeekButton() {
+interface SneakPeekContextValue {
+  registerTap: () => void;
+  tapCount: number;
+  flamingoModeActive: boolean;
+  modalOpen: boolean;
+}
+
+const SneakPeekContext = createContext<SneakPeekContextValue | null>(null);
+
+function debugLog(...args: unknown[]) {
+  if (isDev) console.log("[SneakPeek]", ...args);
+}
+
+export function SneakPeekProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const [hydrated, setHydrated] = useState(false);
   const [clicks, setClicks] = useState(0);
-  const [muffinActivated, setMuffinActivated] = useState(false);
+  const [flamingoModeActive, setFlamingoModeActive] = useState(false);
   const [modalMode, setModalMode] = useState<ModalMode>(null);
   const [confetti, setConfetti] = useState(false);
   const [bonus, setBonus] = useState(0);
   const [pending, startTransition] = useTransition();
 
   useEffect(() => {
-    setClicks(Number(localStorage.getItem(STORAGE_KEY) ?? 0));
-    setMuffinActivated(!!localStorage.getItem(ACTIVATED_KEY));
+    const storedClicks = Number(localStorage.getItem(STORAGE_KEY) ?? 0);
+    const activated = !!localStorage.getItem(ACTIVATED_KEY);
+    setClicks(storedClicks);
+    setFlamingoModeActive(activated);
+    setHydrated(true);
+    debugLog("hydrated", { tapCount: storedClicks, flamingoModeActive: activated });
   }, []);
 
-  function closeModal() {
+  const closeModal = useCallback(() => {
     setModalMode(null);
     setConfetti(false);
-  }
+    debugLog("modal closed");
+  }, []);
 
-  function handleClick() {
-    if (muffinActivated || pending) return;
+  const registerTap = useCallback(() => {
+    if (!hydrated) {
+      debugLog("tap ignored — not hydrated yet");
+      return;
+    }
+    if (flamingoModeActive || pending) {
+      debugLog("tap ignored", { flamingoModeActive, pending });
+      return;
+    }
 
     const next = clicks + 1;
     setClicks(next);
     localStorage.setItem(STORAGE_KEY, String(next));
+    debugLog("tap count", next);
 
     if (next >= MUFFIN_CLICKS_REQUIRED) {
+      debugLog("threshold reached — activating Flamingo Queen");
       startTransition(async () => {
         const result = await activateMuffinMode();
         if (result.success) {
           localStorage.setItem(ACTIVATED_KEY, "1");
-          setMuffinActivated(true);
+          setFlamingoModeActive(true);
           setBonus(result.bonus);
           setConfetti(true);
           setModalMode("muffin");
+          debugLog("modal open", "muffin", { bonus: result.bonus });
           router.refresh();
         } else if (result.error?.includes("already")) {
           localStorage.setItem(ACTIVATED_KEY, "1");
-          setMuffinActivated(true);
+          setFlamingoModeActive(true);
+          debugLog("flamingo mode already active on server");
         } else {
           setModalMode("preview");
+          debugLog("modal open", "preview", { activationError: result.error });
         }
       });
     } else {
       setModalMode("preview");
+      debugLog("modal open", "preview");
     }
-  }
+  }, [hydrated, flamingoModeActive, pending, clicks, router]);
 
-  if (muffinActivated) return null;
+  const modalOpen = modalMode !== null;
 
   return (
-    <>
+    <SneakPeekContext.Provider
+      value={{ registerTap, tapCount: clicks, flamingoModeActive, modalOpen }}
+    >
+      {children}
       {confetti && <ConfettiBurst />}
-      <button
-        type="button"
-        onClick={handleClick}
-        disabled={pending}
-        className="mx-auto block text-xs font-medium text-sky-500/80 underline-offset-2 hover:text-sky-700 hover:underline disabled:opacity-50"
-      >
-        👀 Sneak Peek
-      </button>
 
       {modalMode === "preview" && (
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-sky-950/50 p-4">
@@ -85,6 +121,9 @@ export function SneakPeekButton() {
             <p className="text-center text-2xl font-extrabold text-purple-700">🐶 Muffin Preview</p>
             <p className="mt-3 text-center text-sm font-medium text-purple-900">
               Muffin has reviewed the app and determined it requires more chaos.
+            </p>
+            <p className="mt-2 text-center text-xs font-semibold text-purple-600">
+              Sneak Peek {clicks}/{MUFFIN_CLICKS_REQUIRED}
             </p>
             <div className="mt-4 rounded-2xl bg-white/70 p-4">
               <p className="text-sm font-bold text-purple-800">Coming Soon:</p>
@@ -110,7 +149,7 @@ export function SneakPeekButton() {
           >
             <div className="mx-auto w-52">
               <CharacterImage
-                src={CHARACTER_ASSETS.muffin.flamingoRide}
+                src={CHARACTER_ASSETS.muffin.flamingoQueen}
                 fallback={CHARACTER_ASSETS.muffin.flamingoQueen}
                 alt="Flamingo Queen Muffin"
                 width={208}
@@ -118,7 +157,7 @@ export function SneakPeekButton() {
                 className="object-contain"
               />
             </div>
-            <p className="mt-4 text-2xl font-extrabold text-purple-800">ALL HAIL THE FLAMINGO QUEEN</p>
+            <p className="mt-4 text-2xl font-extrabold text-purple-800">{FLAMINGO_QUEEN_TITLE}</p>
             <p className="mt-2 text-base font-bold text-pink-700">Long live the ruler of chaos.</p>
             <p className="mt-2 text-lg font-bold text-sky-900">I AM THE FLAMINGO QUEEN.</p>
             {bonus > 0 && (
@@ -130,6 +169,37 @@ export function SneakPeekButton() {
           </div>
         </div>
       )}
-    </>
+    </SneakPeekContext.Provider>
+  );
+}
+
+export function useSneakPeek(): SneakPeekContextValue {
+  const ctx = useContext(SneakPeekContext);
+  if (!ctx) {
+    throw new Error("useSneakPeek must be used within SneakPeekProvider");
+  }
+  return ctx;
+}
+
+/** Visible sneak peek trigger — companion card taps also count */
+export function SneakPeekButton() {
+  const { registerTap, tapCount, flamingoModeActive } = useSneakPeek();
+
+  if (flamingoModeActive) {
+    return (
+      <p className="text-center text-sm font-semibold text-purple-700">
+        👑 Flamingo Queen unlocked!
+      </p>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={registerTap}
+      className="mx-auto block min-h-10 rounded-full px-4 text-sm font-semibold text-sky-600 underline-offset-2 transition hover:bg-sky-50 hover:text-sky-800 hover:underline"
+    >
+      👀 Sneak Peek ({tapCount}/5)
+    </button>
   );
 }

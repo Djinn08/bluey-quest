@@ -5,7 +5,7 @@ import { FlareModeButton } from "@/components/dashboard/FlareModeButton";
 import { LogFoodSection } from "@/components/dashboard/LogFoodSection";
 import { StatsBanner } from "@/components/dashboard/StatsBanner";
 import { StreakMessage } from "@/components/dashboard/StreakMessage";
-import { SneakPeekButton } from "@/components/easter-egg/SneakPeekButton";
+import { SneakPeekButton } from "@/components/easter-egg/SneakPeekProvider";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { pickRandom, FLARE_MESSAGES } from "@/lib/characters";
 import { isFlareDayActive } from "@/lib/game/flare-service";
@@ -57,6 +57,8 @@ export default async function DashboardPage() {
         hasCompletedToday={completedToday.length > 0}
       />
 
+      <SneakPeekButton />
+
       {flareActive && (
         <div className="rounded-2xl bg-violet-100 px-4 py-3 text-center text-sm font-semibold text-violet-900">
           ⚡ Flare Day — {pickRandom(FLARE_MESSAGES)}
@@ -82,7 +84,6 @@ export default async function DashboardPage() {
         <LogFoodSection />
       </section>
 
-      <SneakPeekButton />
       <CharacterPopup />
     </div>
   );

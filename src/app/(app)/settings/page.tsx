@@ -1,7 +1,6 @@
 import { SettingsForm } from "@/components/settings/SettingsForm";
-import { DEFAULT_THEME } from "@/lib/themes";
+import { DEFAULT_THEME, normalizeTheme } from "@/lib/themes";
 import { createClient } from "@/lib/supabase/server";
-import type { ThemePreference } from "@/lib/types/database";
 
 export default async function SettingsPage() {
   const supabase = await createClient();
@@ -20,7 +19,7 @@ export default async function SettingsPage() {
   return (
     <SettingsForm
       displayName={profile?.display_name ?? null}
-      themePreference={(profile?.theme_preference as ThemePreference) ?? DEFAULT_THEME}
+      themePreference={normalizeTheme(profile?.theme_preference ?? DEFAULT_THEME)}
       characterSoundsEnabled={profile?.character_sounds_enabled ?? true}
     />
   );

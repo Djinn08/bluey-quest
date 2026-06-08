@@ -1,3 +1,5 @@
+import type { ThemePreference } from "@/lib/types/database";
+
 export type CompanionId = "bluey" | "bingo" | "muffin";
 export type CharacterId = CompanionId | "buginspector" | "flamingoQueen";
 
@@ -7,7 +9,21 @@ export interface CharacterMessage {
   message: string;
 }
 
-/** Centralized character asset registry (Jaydan Edition v0.2) */
+export interface CharacterDefinition {
+  id: CompanionId;
+  name: string;
+  theme: ThemePreference;
+  defaultImage: string;
+  specialImages: {
+    heart?: string;
+    shock?: string;
+    happy?: string;
+    balloon?: string;
+  };
+  quotes: readonly string[];
+}
+
+/** Canonical asset paths — files served as-is from /public/characters */
 export const CHARACTER_ASSETS = {
   bluey: {
     default: "/characters/bluey-default.png",
@@ -21,16 +37,61 @@ export const CHARACTER_ASSETS = {
   },
   muffin: {
     default: "/characters/muffin-default.png",
-    defaultPng: "/characters/muffin-default.png",
-    defaultWebp: "/characters/muffin-default.webp",
     buginspector: "/characters/muffin-buginspector.png",
     flamingoQueen: "/characters/flamingo-queen.png",
-    flamingoRide: "/characters/muffin-flamingo-ride.png",
   },
-  hero: {
-    blueyBingo: "/characters/bluey-bingo-hero.png",
+  group: {
+    family: "/characters/bluey-family.png",
   },
 } as const;
+
+export const CHARACTER_REGISTRY: Record<CompanionId, CharacterDefinition> = {
+  bluey: {
+    id: "bluey",
+    name: "Bluey",
+    theme: "bluey",
+    defaultImage: CHARACTER_ASSETS.bluey.default,
+    specialImages: {
+      heart: CHARACTER_ASSETS.bluey.heart,
+      shock: CHARACTER_ASSETS.bluey.shock,
+    },
+    quotes: [
+      "You're doing great.",
+      "One step at a time.",
+      "Keep going.",
+      "Progress is progress.",
+    ],
+  },
+  bingo: {
+    id: "bingo",
+    name: "Bingo",
+    theme: "bingo",
+    defaultImage: CHARACTER_ASSETS.bingo.default,
+    specialImages: {
+      happy: CHARACTER_ASSETS.bingo.happy,
+      balloon: CHARACTER_ASSETS.bingo.balloon,
+    },
+    quotes: [
+      "Little things count.",
+      "Every bit helps.",
+      "Nice job today.",
+      "You've got this.",
+    ],
+  },
+  muffin: {
+    id: "muffin",
+    name: "Muffin",
+    theme: "muffin",
+    defaultImage: CHARACTER_ASSETS.muffin.default,
+    specialImages: {},
+    quotes: [
+      "MORE CHAOS!",
+      "I DEMAND CELEBRATION!",
+      "YOU DID THE THING!",
+      "AMAZING!",
+    ],
+  },
+};
 
 export const STREAK_MILESTONES = [7, 14, 30, 60, 100] as const;
 
@@ -41,34 +102,14 @@ export const COMPANION_GRADIENTS: Record<CompanionId, string> = {
 };
 
 export const COMPANION_NAMES: Record<CompanionId, string> = {
-  bluey: "Bluey",
-  bingo: "Bingo",
-  muffin: "Muffin",
+  bluey: CHARACTER_REGISTRY.bluey.name,
+  bingo: CHARACTER_REGISTRY.bingo.name,
+  muffin: CHARACTER_REGISTRY.muffin.name,
 };
 
-export const BLUEY_QUOTES = [
-  "You're doing great.",
-  "One step at a time.",
-  "Keep going.",
-  "Progress is progress.",
-  "Proud of you.",
-] as const;
-
-export const BINGO_QUOTES = [
-  "Little things count.",
-  "Every bit helps.",
-  "Nice job today.",
-  "You've got this.",
-  "Keep trying.",
-] as const;
-
-export const MUFFIN_QUOTES = [
-  "MORE CHAOS!",
-  "YOU DID THE THING!",
-  "I DEMAND CELEBRATION!",
-  "AMAZING!",
-  "ABSOLUTELY INCREDIBLE!",
-] as const;
+export const BLUEY_QUOTES = CHARACTER_REGISTRY.bluey.quotes;
+export const BINGO_QUOTES = CHARACTER_REGISTRY.bingo.quotes;
+export const MUFFIN_QUOTES = CHARACTER_REGISTRY.muffin.quotes;
 
 export const COMPANION_QUOTES: Record<CompanionId, readonly string[]> = {
   bluey: BLUEY_QUOTES,
@@ -84,27 +125,28 @@ export const FLARE_SUPPORT_QUOTES = [
   "Some days surviving is the quest.",
 ] as const;
 
-/** @deprecated Use CHARACTER_ASSETS — kept for gradual migration */
+export const FLAMINGO_QUEEN_TITLE = "ALL HAIL THE FLAMINGO QUEEN";
+
 export const CHARACTERS: Record<
   CharacterId,
   { name: string; image: string; imageFallback: string; color: string }
 > = {
   bluey: {
-    name: "Bluey",
+    name: CHARACTER_REGISTRY.bluey.name,
     image: CHARACTER_ASSETS.bluey.default,
     imageFallback: CHARACTER_ASSETS.bluey.default,
     color: COMPANION_GRADIENTS.bluey,
   },
   bingo: {
-    name: "Bingo",
+    name: CHARACTER_REGISTRY.bingo.name,
     image: CHARACTER_ASSETS.bingo.default,
     imageFallback: CHARACTER_ASSETS.bingo.default,
     color: COMPANION_GRADIENTS.bingo,
   },
   muffin: {
-    name: "Muffin",
+    name: CHARACTER_REGISTRY.muffin.name,
     image: CHARACTER_ASSETS.muffin.default,
-    imageFallback: CHARACTER_ASSETS.muffin.defaultPng,
+    imageFallback: CHARACTER_ASSETS.muffin.default,
     color: COMPANION_GRADIENTS.muffin,
   },
   buginspector: {
@@ -116,7 +158,7 @@ export const CHARACTERS: Record<
   flamingoQueen: {
     name: "Flamingo Queen Muffin",
     image: CHARACTER_ASSETS.muffin.flamingoQueen,
-    imageFallback: CHARACTER_ASSETS.muffin.flamingoRide,
+    imageFallback: CHARACTER_ASSETS.muffin.flamingoQueen,
     color: "from-pink-200 to-purple-400",
   },
 };
@@ -164,6 +206,8 @@ export const FLARE_MESSAGES = FLARE_SUPPORT_QUOTES;
 
 export const APP_NAME = "Bluey Quest";
 
+export type CompanionImageVariant = "default" | "heart" | "happy" | "shock" | "balloon";
+
 export function pickRandom<T>(items: readonly T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -173,7 +217,7 @@ export function pickRandomCompanion(): CompanionId {
 }
 
 export function pickQuoteForCompanion(companion: CompanionId): string {
-  return pickRandom(COMPANION_QUOTES[companion]);
+  return pickRandom(CHARACTER_REGISTRY[companion].quotes);
 }
 
 export function isStreakMilestone(streakDays: number): boolean {
@@ -182,14 +226,14 @@ export function isStreakMilestone(streakDays: number): boolean {
 
 export function getCompanionImage(
   companion: CompanionId,
-  variant: "default" | "heart" | "happy" | "flamingo" = "default",
+  variant: CompanionImageVariant = "default",
 ): string {
-  if (companion === "bluey" && variant === "heart") return CHARACTER_ASSETS.bluey.heart;
-  if (companion === "bingo" && variant === "happy") return CHARACTER_ASSETS.bingo.happy;
-  if (companion === "muffin" && variant === "flamingo") return CHARACTER_ASSETS.muffin.flamingoQueen;
-  if (companion === "bluey") return CHARACTER_ASSETS.bluey.default;
-  if (companion === "bingo") return CHARACTER_ASSETS.bingo.default;
-  return CHARACTER_ASSETS.muffin.default;
+  const def = CHARACTER_REGISTRY[companion];
+  if (variant === "heart" && def.specialImages.heart) return def.specialImages.heart;
+  if (variant === "shock" && def.specialImages.shock) return def.specialImages.shock;
+  if (variant === "happy" && def.specialImages.happy) return def.specialImages.happy;
+  if (variant === "balloon" && def.specialImages.balloon) return def.specialImages.balloon;
+  return def.defaultImage;
 }
 
 export function pickDailyItem<T extends { character?: string; message: string }>(

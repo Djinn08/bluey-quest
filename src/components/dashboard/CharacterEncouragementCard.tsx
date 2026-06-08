@@ -1,9 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useSneakPeek } from "@/components/easter-egg/SneakPeekProvider";
 import { CharacterImage } from "@/components/ui/CharacterImage";
 import {
-  CHARACTER_ASSETS,
   COMPANION_GRADIENTS,
   COMPANION_NAMES,
   FLARE_SUPPORT_QUOTES,
@@ -13,10 +13,14 @@ import {
   pickRandom,
   pickRandomCompanion,
   type CompanionId,
+  type CompanionImageVariant,
 } from "@/lib/characters";
 
 const MUFFIN_MODE_KEY = "bluey-quest-muffin-mode";
 const ACTION_COMPLETED_EVENT = "bluey-quest:action-completed";
+
+const SSR_FALLBACK_COMPANION: CompanionId = "bluey";
+const SSR_FALLBACK_QUOTE = "You're doing great.";
 
 interface CharacterEncouragementCardProps {
   flareActive?: boolean;
@@ -24,82 +28,71 @@ interface CharacterEncouragementCardProps {
   hasCompletedToday?: boolean;
 }
 
-type ImageVariant = "default" | "heart" | "happy" | "flamingo";
-
-function resolveState(
-  flareActive: boolean,
-  streakDays: number,
-  hasCompletedToday: boolean,
-  justCompleted: boolean,
-  muffinModeUnlocked: boolean,
-): { companion: CompanionId; variant: ImageVariant; quote: string } {
-  if (muffinModeUnlocked) {
-    return {
-      companion: "muffin",
-      variant: "flamingo",
-      quote: pickQuoteForCompanion("muffin"),
-    };
-  }
-  if (flareActive || isStreakMilestone(streakDays)) {
-    return {
-      companion: "bluey",
-      variant: "heart",
-      quote: pickRandom(FLARE_SUPPORT_QUOTES),
-    };
-  }
-  if (justCompleted || hasCompletedToday) {
-    return {
-      companion: "bingo",
-      variant: "happy",
-      quote: pickQuoteForCompanion("bingo"),
-    };
-  }
-  const companion = pickRandomCompanion();
-  return {
-    companion,
-    variant: "default",
-    quote: pickQuoteForCompanion(companion),
-  };
-}
-
 export function CharacterEncouragementCard({
   flareActive = false,
   streakDays = 0,
   hasCompletedToday = false,
 }: CharacterEncouragementCardProps) {
+  const { registerTap } = useSneakPeek();
+  const [mounted, setMounted] = useState(false);
   const [muffinModeUnlocked, setMuffinModeUnlocked] = useState(false);
   const [justCompleted, setJustCompleted] = useState(false);
-  const [companion, setCompanion] = useState<CompanionId>(() => pickRandomCompanion());
-  const [variant, setVariant] = useState<ImageVariant>("default");
-  const [quote, setQuote] = useState(() => pickQuoteForCompanion(pickRandomCompanion()));
-
-  const applyState = useCallback(
-    (overrides?: Partial<{ justCompleted: boolean }>) => {
-      const jc = overrides?.justCompleted ?? justCompleted;
-      const resolved = resolveState(
-        flareActive,
-        streakDays,
-        hasCompletedToday,
-        jc,
-        muffinModeUnlocked,
-      );
-      setCompanion(resolved.companion);
-      setVariant(resolved.variant);
-      setQuote(resolved.quote);
-    },
-    [flareActive, streakDays, hasCompletedToday, justCompleted, muffinModeUnlocked],
-  );
+  const [sessionCompanion, setSessionCompanion] = useState<CompanionId | null>(null);
+  const [companion, setCompanion] = useState<CompanionId>(SSR_FALLBACK_COMPANION);
+  const [variant, setVariant] = useState<CompanionImageVariant>("default");
+  const [quote, setQuote] = useState(SSR_FALLBACK_QUOTE);
 
   useEffect(() => {
-    setMuffinModeUnlocked(!!localStorage.getItem(MUFFIN_MODE_KEY));
+    setMounted(true);
   }, []);
 
   useEffect(() => {
-    applyState();
-  }, [flareActive, streakDays, hasCompletedToday, muffinModeUnlocked, applyState]);
+    if (!mounted) return;
+
+    setMuffinModeUnlocked(!!localStorage.getItem(MUFFIN_MODE_KEY));
+    setSessionCompanion(pickRandomCompanion());
+  }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted || sessionCompanion === null) return;
+
+    if (muffinModeUnlocked) {
+      setCompanion("muffin");
+      setVariant("default");
+      setQuote(pickQuoteForCompanion("muffin"));
+      return;
+    }
+
+    if (flareActive || isStreakMilestone(streakDays)) {
+      setCompanion("bluey");
+      setVariant("heart");
+      setQuote(pickRandom(FLARE_SUPPORT_QUOTES));
+      return;
+    }
+
+    if (justCompleted || hasCompletedToday) {
+      setCompanion("bingo");
+      setVariant("happy");
+      setQuote(pickQuoteForCompanion("bingo"));
+      return;
+    }
+
+    setCompanion(sessionCompanion);
+    setVariant("default");
+    setQuote(pickQuoteForCompanion(sessionCompanion));
+  }, [
+    mounted,
+    sessionCompanion,
+    muffinModeUnlocked,
+    flareActive,
+    streakDays,
+    hasCompletedToday,
+    justCompleted,
+  ]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
+
     function handler() {
       setJustCompleted(true);
       setCompanion("bingo");
@@ -117,20 +110,13 @@ export function CharacterEncouragementCard({
   }, []);
 
   function handleTap() {
+    if (!mounted) return;
     setQuote(pickQuoteForCompanion(companion));
+    registerTap();
   }
 
-  const imageSrc = useMemo(() => {
-    if (companion === "muffin" && variant === "flamingo") {
-      return CHARACTER_ASSETS.muffin.flamingoQueen;
-    }
-    return getCompanionImage(companion, variant);
-  }, [companion, variant]);
-
-  const fallback =
-    companion === "muffin"
-      ? CHARACTER_ASSETS.muffin.defaultPng
-      : imageSrc;
+  const imageSrc = useMemo(() => getCompanionImage(companion, variant), [companion, variant]);
+  const fallback = useMemo(() => getCompanionImage(companion, "default"), [companion]);
 
   return (
     <div className="relative mt-14 animate-companion-enter">
@@ -141,16 +127,17 @@ export function CharacterEncouragementCard({
         aria-label={`${COMPANION_NAMES[companion]} says: ${quote}. Tap for another quote.`}
       >
         <div
-          className={`absolute -top-12 left-2 z-10 drop-shadow-lg transition-transform duration-300 group-active:scale-95`}
-          style={{ width: 130, height: 130 }}
+          className="absolute -top-12 left-2 z-10 drop-shadow-lg transition-transform duration-300 group-active:scale-95"
+          style={{ width: 135, height: 135 }}
         >
           <CharacterImage
+            key={`${companion}-${variant}`}
             src={imageSrc}
             fallback={fallback}
             alt={COMPANION_NAMES[companion]}
-            width={130}
-            height={130}
-            className="object-contain"
+            width={135}
+            height={135}
+            className="h-full w-full object-contain"
           />
         </div>
 

@@ -8,7 +8,10 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { DEFAULT_THEME } from "@/lib/themes";
 import type { ThemePreference } from "@/lib/types/database";
+
+const THEME_STORAGE_KEY = "bluey-quest-theme";
 
 interface ThemeContextValue {
   theme: ThemePreference;
@@ -35,6 +38,11 @@ export function ThemeProvider({
 
   useEffect(() => {
     setThemeState(serverTheme);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, serverTheme);
+    } catch {
+      /* private browsing */
+    }
   }, [serverTheme]);
 
   useEffect(() => {
@@ -48,6 +56,11 @@ export function ThemeProvider({
   const setTheme = useCallback((next: ThemePreference) => {
     setThemeState(next);
     document.documentElement.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch {
+      /* private browsing */
+    }
   }, []);
 
   const setCharacterSoundsEnabled = useCallback((enabled: boolean) => {
@@ -69,4 +82,18 @@ export function useTheme(): ThemeContextValue {
     throw new Error("useTheme must be used within ThemeProvider");
   }
   return ctx;
+}
+
+/** Read cached theme for optimistic UI — server profile remains source of truth */
+export function readCachedTheme(): ThemePreference {
+  if (typeof window === "undefined") return DEFAULT_THEME;
+  try {
+    const cached = localStorage.getItem(THEME_STORAGE_KEY);
+    if (cached === "bluey" || cached === "bingo" || cached === "muffin") {
+      return cached;
+    }
+  } catch {
+    /* ignore */
+  }
+  return DEFAULT_THEME;
 }

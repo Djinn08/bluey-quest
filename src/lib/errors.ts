@@ -64,10 +64,16 @@ export function formatSettingsError(error: {
     return `Settings save failed: ${detail}`;
   }
 
+  if (error.code === "42501") {
+    return isDev
+      ? `Settings save failed: RLS policy blocked profile save. Run migration 20250609000000_profiles_rls_insert.sql — ${detail}`
+      : "Settings could not be saved. Database permissions may need updating.";
+  }
+
   if (error.code === "23514") {
     return isDev
-      ? `Settings save failed: theme constraint mismatch. Run migration 20250608200000_character_themes.sql — ${detail}`
-      : "Theme could not be saved. Database migration may be required.";
+      ? `Settings save failed: theme constraint still allows cozy/bright/calm only. Run supabase/RUN_THIS_IN_SQL_EDITOR.sql in Supabase SQL Editor — ${detail}`
+      : "Theme could not be saved. Run supabase/RUN_THIS_IN_SQL_EDITOR.sql in your Supabase dashboard.";
   }
 
   if (error.message?.includes("character_sounds_enabled")) {
