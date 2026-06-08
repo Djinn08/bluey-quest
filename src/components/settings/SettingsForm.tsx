@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { useTheme } from "@/components/layout/ThemeProvider";
 import { ThemeSelector } from "@/components/settings/ThemeSelector";
-import { DEFAULT_THEME } from "@/lib/themes";
 import type { ThemePreference } from "@/lib/types/database";
 
 const initial: SettingsResult = {};
@@ -31,14 +30,11 @@ export function SettingsForm({
   const [exportPending, startExport] = useTransition();
   const [exportError, setExportError] = useState<string | null>(null);
   const [signOutPending, startSignOut] = useTransition();
-  const [selectedTheme, setSelectedTheme] = useState<ThemePreference>(
-    themePreference ?? DEFAULT_THEME,
-  );
   const [soundsOn, setSoundsOn] = useState(characterSoundsEnabled);
 
+  // Sync from server only when saved preference changes (after refresh)
   useEffect(() => {
-    setSelectedTheme(themePreference ?? DEFAULT_THEME);
-    setTheme(themePreference ?? DEFAULT_THEME);
+    setTheme(themePreference);
   }, [themePreference, setTheme]);
 
   useEffect(() => {
@@ -90,7 +86,7 @@ export function SettingsForm({
             />
           </label>
 
-          <ThemeSelector value={selectedTheme} onChange={setSelectedTheme} />
+          <ThemeSelector />
 
           <input type="hidden" name="character_sounds_enabled" value={soundsOn ? "on" : "off"} />
           <label className="flex items-center justify-between rounded-2xl border-2 border-[var(--input-border)] bg-[var(--card)] px-4 py-3">

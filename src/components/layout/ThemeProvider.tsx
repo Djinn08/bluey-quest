@@ -38,25 +38,19 @@ export function ThemeProvider({
   const [characterSoundsEnabled, setCharacterSoundsState] = useState(serverSounds);
 
   useEffect(() => {
+    setCharacterSoundsState(serverSounds);
+  }, [serverSounds]);
+
+  // Apply saved server preference when it changes (e.g. after settings save + refresh)
+  useEffect(() => {
     setThemeState(serverTheme);
+    applyThemeTokens(serverTheme);
     try {
       localStorage.setItem(THEME_STORAGE_KEY, serverTheme);
     } catch {
       /* private browsing */
     }
   }, [serverTheme]);
-
-  useEffect(() => {
-    setCharacterSoundsState(serverSounds);
-  }, [serverSounds]);
-
-  useEffect(() => {
-    applyThemeTokens(serverTheme);
-  }, [serverTheme]);
-
-  useEffect(() => {
-    applyThemeTokens(theme);
-  }, [theme]);
 
   const setTheme = useCallback((next: ThemePreference) => {
     setThemeState(next);

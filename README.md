@@ -319,6 +319,152 @@ Any daily action **or** food log counts toward the streak for that day.
 
 ---
 
+# Long-Term Vision
+
+Bluey Quest was originally created to help make healthy habits, symptom management, and daily progress feel encouraging rather than stressful.
+
+The long-term goal is to evolve the underlying system into a chronic illness friendly companion application that adapts to the user's available energy rather than expecting the same performance every day.
+
+The philosophy is:
+
+"Work with the day you have, not the day you wish you had."
+
+---
+
+# Future Energy System
+
+Planned Feature
+
+Bluey Quest will eventually support two energy tracking modes.
+
+### Manual Spoon Mode
+
+Users manually select their available energy.
+
+Examples:
+
+* Great Day
+* Good Day
+* Okay Day
+* Tough Day
+* Flare Day
+
+or
+
+* 10 Spoons
+* 8 Spoons
+* 5 Spoons
+* 2 Spoons
+
+This mode requires no external devices.
+
+---
+
+### Smart Energy Mode
+
+Future integrations may allow Bluey Quest to estimate available energy automatically.
+
+Potential sources:
+
+* Wearables
+* Heart rate data
+* Recovery metrics
+* Activity trends
+* Health platforms
+
+The application should adapt goals and expectations based on available energy.
+
+Examples:
+
+* Reduce task expectations
+* Increase rewards on difficult days
+* Recommend pacing
+* Protect streaks during flares
+
+---
+
+# Visible Integration (Future)
+
+Research Phase
+
+Bluey Quest may eventually support integration with Visible.
+
+Potential uses:
+
+* Read recovery metrics
+* Read pacing metrics
+* Read exertion trends
+* Read stability information
+
+Potential Bluey Quest behaviors:
+
+* Suggest Gentle Mode on difficult days
+* Recommend reduced activity targets
+* Adjust rewards based on available energy
+* Improve flare day support
+
+No Visible integration currently exists.
+
+This is a future research project.
+
+---
+
+# Companion Intelligence
+
+Future Goal
+
+Rather than acting as a habit tracker, Bluey Quest should eventually behave like a supportive companion.
+
+Examples:
+
+* Recognize difficult days
+* Celebrate small wins
+* Encourage pacing
+* Suggest rest when appropriate
+* Reduce guilt associated with chronic illness
+
+The goal is never to punish users for low-energy days.
+
+---
+
+# Potential Partnerships
+
+Long-Term Exploration
+
+Future opportunities may include partnerships with organizations or platforms that support:
+
+* Chronic illness management
+* Accessibility
+* Energy management
+* Symptom tracking
+* Pacing systems
+
+Examples:
+
+* Wearable integrations
+* Recovery tracking platforms
+* Health-focused applications
+
+No partnerships currently exist.
+
+This section documents potential future directions only.
+
+---
+
+# Core Philosophy
+
+Traditional habit trackers often assume every day is equal.
+
+Bluey Quest is built around the idea that:
+
+Some days are adventure days.
+
+Some days are recovery days.
+
+Both count.
+
+---
+
 ## Future Expansion (Not Implemented)
 
 Placeholder stubs live under `src/lib/features/`. Items below are planned only — not built yet.

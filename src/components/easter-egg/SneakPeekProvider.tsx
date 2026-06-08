@@ -66,8 +66,12 @@ export function SneakPeekProvider({ children }: { children: ReactNode }) {
       debugLog("tap ignored — not hydrated yet");
       return;
     }
-    if (flamingoModeActive || pending) {
-      debugLog("tap ignored", { flamingoModeActive, pending });
+    if (flamingoModeActive) {
+      debugLog("tap ignored — flamingo mode already active");
+      return;
+    }
+    if (pending) {
+      debugLog("tap ignored", { pending });
       return;
     }
 
@@ -181,17 +185,11 @@ export function useSneakPeek(): SneakPeekContextValue {
   return ctx;
 }
 
-/** Visible sneak peek trigger — companion card taps also count */
+/** Sneak peek trigger — hidden once Flamingo Queen is unlocked (tap companion to replay) */
 export function SneakPeekButton() {
   const { registerTap, tapCount, flamingoModeActive } = useSneakPeek();
 
-  if (flamingoModeActive) {
-    return (
-      <p className="text-center text-sm font-semibold text-purple-700">
-        👑 Flamingo Queen unlocked!
-      </p>
-    );
-  }
+  if (flamingoModeActive) return null;
 
   return (
     <button
