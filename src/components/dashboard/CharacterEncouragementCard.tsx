@@ -20,13 +20,14 @@ export function CharacterEncouragementCard({ override }: CharacterEncouragementC
   return (
     <Card className={`bg-gradient-to-r ${character.color} bg-opacity-20`}>
       <div className="flex items-center gap-4">
-        <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl bg-white/80 ring-2 ring-white/60">
+        <div className="relative h-24 w-24 shrink-0">
           <CharacterImage
             src={character.image}
             fallback={character.imageFallback}
             alt={entry.name}
-            fill
-            sizes="64px"
+            width={96}
+            height={96}
+            className="object-contain"
           />
         </div>
         <div>

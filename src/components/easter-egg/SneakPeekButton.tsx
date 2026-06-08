@@ -5,6 +5,7 @@ import { useEffect, useState, useTransition } from "react";
 import { activateMuffinMode } from "@/app/actions/easter-egg";
 import { Button } from "@/components/ui/Button";
 import { ConfettiBurst } from "@/components/ui/ConfettiBurst";
+import { CharacterImage } from "@/components/ui/CharacterImage";
 
 const STORAGE_KEY = "bluey-quest-sneak-peek-count";
 const ACTIVATED_KEY = "bluey-quest-muffin-mode";
@@ -106,8 +107,18 @@ export function SneakPeekButton() {
             className="animate-bounce-in max-w-sm rounded-3xl bg-gradient-to-br from-orange-100 to-pink-100 p-6 text-center shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-3xl font-extrabold text-orange-600">🐶 MUFFIN MODE ACTIVATED</p>
-            <p className="mt-3 text-lg font-bold text-sky-900">I AM THE FLAMINGO QUEEN.</p>
+            <div className="mx-auto w-48">
+              <CharacterImage
+                src="/characters/muffinFlamingoQueen.png"
+                fallback="/characters/muffin3.png"
+                alt="Flamingo Queen Muffin"
+                width={192}
+                height={192}
+                className="object-contain"
+              />
+            </div>
+            <p className="mt-4 text-2xl font-extrabold text-orange-600">FLAMINGO QUEEN HAS ARRIVED</p>
+            <p className="mt-2 text-lg font-bold text-sky-900">I AM THE FLAMINGO QUEEN.</p>
             {bonus > 0 && (
               <p className="mt-2 text-xl font-extrabold text-orange-500">+{bonus} Dollarbucks</p>
             )}

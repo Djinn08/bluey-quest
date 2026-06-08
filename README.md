@@ -17,7 +17,7 @@ Must be removed before any public release.
 - Serwist (PWA / service worker)
 - Vercel-ready deployment
 
-## Features (V1)
+## Features (Jaydan Edition — v0.1 + v0.2 in progress)
 
 - Email/password auth with persistent sessions
 - Dashboard: balance, streak, multiplier, daily actions
@@ -25,7 +25,11 @@ Must be removed before any public release.
 - Transaction history with multiplier details
 - Food history with CSV export
 - Keepy Uppy streak & bonus tiers
-- Installable PWA with offline-friendly caching
+- Character themes (Bluey / Bingo / Muffin) with persistence
+- Tap-to-interact characters (Bluey, Bingo, Muffin) with optional sounds
+- **Bug Inspector Muffin** — playful bug reports via `muffin3.png`
+- Sneak Peek → Muffin Mode / **Flamingo Queen** easter egg
+- Dollarbuck PWA icon, splash screen, installable PWA with offline-friendly caching
 
 ## Getting Started
 
@@ -72,7 +76,7 @@ Open [http://localhost:3000](http://localhost:3000). Sign up with email/password
 
 - **Production build required** for the service worker (`npm run build && npm start`).
 - On mobile: use browser “Add to Home Screen”.
-- Icons live in `public/icons/`.
+- Dollarbuck icons live in `public/icons/` (source: `blueydollarbuck.png`). Regenerate with `npm run icons`.
 
 ## Deploy to Vercel
 
@@ -119,7 +123,7 @@ Any daily action **or** food log counts toward the streak for that day.
 |---------|-------|
 | **v0.1** | Core Functionality |
 | **v0.15** | Notifications |
-| **v0.2** | Flare Mode Expansion + Rewards Store |
+| **v0.2** | PWA Completion + Flare Mode Expansion + Rewards Store *(in progress)* |
 | **v0.3** | AI Analysis |
 | **v0.5** | Public Product Split |
 
@@ -129,15 +133,124 @@ Any daily action **or** food log counts toward the streak for that day.
 
 Placeholder stubs live under `src/lib/features/`. Items below are planned only — not built yet.
 
-### v0.1 — Core Functionality (current)
+### v0.1 — Core Functionality *(shipped)*
 
-- Email/password auth, dashboard, daily actions, food log, streaks, Dollarbucks, PWA
+- Email/password auth, dashboard, daily actions, food log, streaks, Dollarbucks
+- Character themes, interactions, sounds toggle
+- Bug fixes: Sneak Peek modal, Flare Mode once-per-day, theme save persistence
+
+#### Bug Inspector System *(shipped)*
+
+Official character: `public/characters/muffin3.png` (**Muffin 3** — not generic bug icons)
+
+- Playful bug report FAB and modal: **🐶 Bug Inspector Muffin**
+- Random subtext: *"Tell me what's broken!"* / *"Muffin is investigating..."* / *"This is UNACCEPTABLE!"*
+- Random success quotes: *"I SHALL INVESTIGATE."*, *"THIS IS UNACCEPTABLE."*, etc.
+- **Senior Bug Inspector** easter egg: 10 lifetime reports → +25 Dollarbucks (one-time)
+- Admin bugs page uses Muffin 3 branding
+
+**Character roles:** Bluey (guide/adventure), Bingo (comfort/rest), Muffin (chaos/easter eggs/bug inspector)
+
+**Assets:** See [public/characters/ASSETS.md](./public/characters/ASSETS.md)
 
 ### v0.15 — Notifications
 
 See [Character Reminder System](#future-feature-character-reminder-system-planned-for-v015) below.
 
-### v0.2 — Flare Mode Expansion + Rewards Store
+### v0.2 — In Progress
+
+#### PWA Completion
+
+**Status:** In Progress
+
+##### App Icon
+
+Official asset: `public/icons/blueydollarbuck.png`
+
+This is the official Bluey Dollarbuck and is used as the application icon.
+
+Generated sizes (via `node scripts/generate-icons.mjs`):
+
+- 48×48, 72×72, 96×96, 144×144, 192×192, 512×512
+
+Used for:
+
+- Home Screen Icon
+- Android Install Icon
+- PWA Manifest (`public/manifest.webmanifest`)
+- Browser Tab Icon (`src/app/icon.png`)
+
+**Goal:** When Jaydan installs Bluey Quest on her phone, the icon appears as a Dollarbuck rather than a generic web shortcut.
+
+##### Splash Screen
+
+**Status:** Implemented
+
+Displays on app launch:
+
+> **Bluey Quest**  
+> Healthy habits.  
+> Cozy rewards.  
+> One day at a time.
+
+Featuring Bluey and Bingo artwork. Shown on PWA cold start and first browser visit per session.
+
+**Implementation:** `src/components/pwa/SplashScreen.tsx`
+
+##### Flamingo Queen Secret Event
+
+**Status:** Partially implemented (Muffin Mode easter egg); additional obscure triggers planned
+
+Asset: `public/characters/muffinFlamingoQueen.png`
+
+A hidden Muffin easter egg discovered through curiosity. Currently activated via **Sneak Peek** (5 clicks) → Muffin Mode.
+
+**Activation (current):** Sneak Peek button on dashboard, 5 cumulative clicks.
+
+**Activation (planned):**
+
+- Multiple Muffin taps
+- Repeated Muffin Mode activations
+- Secret interaction sequence
+- Rare random chance
+- Special dates
+
+**Reward display:**
+
+> **FLAMINGO QUEEN HAS ARRIVED**
+
+Shows Flamingo Queen Muffin prominently with quote: *"I AM THE FLAMINGO QUEEN."*
+
+**Rewards (current):**
+
+- +50 Dollarbucks
+- Transaction: `Muffin Mode: Flamingo Queen Bonus`
+
+**Rewards (planned):**
+
+- Unique Badge
+- Exclusive quote variants
+- Additional obscure trigger paths
+
+**Design goal:** A surprise moment that rewards curiosity and makes the app feel personal and handcrafted.
+
+##### Current Release Goal (Jaydan Edition)
+
+Before Jaydan returns:
+
+- [x] Dollarbuck home screen icon
+- [x] PWA manifest with full icon set
+- [x] Splash screen
+- [x] Character images integrated (PNG-first, larger home display)
+- [x] Bug Inspector Muffin (`muffin3.png`)
+- [x] Flamingo Queen asset + Muffin Mode modal (`muffinFlamingoQueen.png`)
+- [x] Flamingo Queen documented
+- [ ] Vercel deployment stable
+- [ ] Core testing completed
+
+**Target:** Stable Jaydan Edition Release
+
+#### Flare Mode Expansion + Rewards Store (planned)
 
 - Flare Shields
 - Custom Rewards Store
@@ -321,3 +434,5 @@ Private / personal use — adjust as needed for your deployment.
 
 - [PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md) — philosophy, architecture, and onboarding
 - [TESTING_CHECKLIST.md](./TESTING_CHECKLIST.md) — step-by-step v0.1 QA checklist
+- [TEST_REPORT.md](./TEST_REPORT.md) — Jaydan Edition bug-fix verification report
+- [public/characters/ASSETS.md](./public/characters/ASSETS.md) — character image placement guide

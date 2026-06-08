@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Card } from "@/components/ui/Card";
+import { CharacterImage } from "@/components/ui/CharacterImage";
+import { CHARACTERS } from "@/lib/characters";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { BugReport } from "@/lib/types/database";
 
@@ -11,6 +13,8 @@ const CATEGORY_LABELS: Record<string, string> = {
   complaint: "Complaint",
   feature_request: "Feature Request",
 };
+
+const bugInspector = CHARACTERS.buginspector;
 
 export default async function AdminBugsPage() {
   const admin = createAdminClient();
@@ -35,8 +39,25 @@ export default async function AdminBugsPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4 p-4">
+      <Card className="bg-gradient-to-r from-violet-100 to-purple-100">
+        <div className="flex items-center gap-4">
+          <CharacterImage
+            src={bugInspector.image}
+            fallback={bugInspector.imageFallback}
+            alt="Bug Inspector Muffin"
+            width={80}
+            height={80}
+            className="object-contain"
+          />
+          <div>
+            <h1 className="text-xl font-extrabold text-violet-900">🐶 Bug Inspector Muffin</h1>
+            <p className="text-sm font-medium text-violet-700">Muffin is investigating...</p>
+          </div>
+        </div>
+      </Card>
+
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold text-sky-900">Bug Reports</h1>
+        <h2 className="text-lg font-bold text-sky-900">Reports ({list.length})</h2>
         <Link href="/admin" className="text-sm font-semibold text-sky-600 hover:underline">
           ← Admin
         </Link>
@@ -44,7 +65,7 @@ export default async function AdminBugsPage() {
 
       {list.length === 0 ? (
         <Card>
-          <p className="text-center text-sky-700">No reports yet.</p>
+          <p className="text-center text-sky-700">No reports yet. The case files are empty.</p>
         </Card>
       ) : (
         <ul className="space-y-3">

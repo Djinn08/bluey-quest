@@ -1,13 +1,37 @@
 {
   "name": "Bluey Quest",
   "short_name": "Bluey Quest",
-  "description": "Healthy habits through cozy gamification and positive reinforcement.",
+  "description": "Healthy habits. Cozy rewards. One day at a time.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#e0f2fe",
   "theme_color": "#0ea5e9",
   "orientation": "portrait-primary",
   "icons": [
+    {
+      "src": "/icons/icon-48.png",
+      "sizes": "48x48",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",

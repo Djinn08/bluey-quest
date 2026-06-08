@@ -1,4 +1,4 @@
-export type CharacterId = "muffin" | "bluey" | "bingo" | "buginspector";
+export type CharacterId = "muffin" | "bluey" | "bingo" | "buginspector" | "flamingoQueen";
 
 export interface CharacterMessage {
   character: CharacterId;
@@ -29,12 +29,45 @@ export const CHARACTERS: Record<
     color: "from-orange-200 to-amber-300",
   },
   buginspector: {
-    name: "Bug Inspector",
-    image: "/characters/buginspector.png",
-    imageFallback: "/characters/buginspector.svg",
+    name: "Bug Inspector Muffin",
+    image: "/characters/muffin3.png",
+    imageFallback: "/characters/muffin3.png",
     color: "from-violet-200 to-purple-400",
   },
+  flamingoQueen: {
+    name: "Flamingo Queen Muffin",
+    image: "/characters/muffinFlamingoQueen.png",
+    imageFallback: "/characters/muffinFlamingoQueen.png",
+    color: "from-pink-200 to-purple-400",
+  },
 };
+
+/** Character role assignments (Jaydan Edition) */
+export const CHARACTER_ROLES = {
+  bluey: ["Guide", "Encouragement", "Adventure", "Progress"],
+  bingo: ["Comfort", "Flare Days", "Rest Days", "Kindness"],
+  muffin: ["Chaos", "Sneak Peek", "Easter Eggs", "Rewards", "Bug Inspector"],
+} as const;
+
+export const BUG_INSPECTOR_HEADERS = [
+  "Tell me what's broken!",
+  "Muffin is investigating...",
+  "This is UNACCEPTABLE!",
+] as const;
+
+export const BUG_REPORT_SUCCESS_RESPONSES = [
+  "I SHALL INVESTIGATE.",
+  "THIS CASE IS VERY SERIOUS.",
+  "I HAVE WRITTEN THIS DOWN.",
+  "I WILL REPORT THIS TO BLUEY.",
+  "THIS IS UNACCEPTABLE.",
+  "THE BUG HAS BEEN NOTED.",
+] as const;
+
+export const SENIOR_BUG_INSPECTOR_TITLE = "Senior Bug Inspector";
+export const SENIOR_BUG_INSPECTOR_REPORTS_REQUIRED = 10;
+export const SENIOR_BUG_INSPECTOR_BONUS = 25;
+export const SENIOR_BUG_INSPECTOR_ACTION = "Senior Bug Inspector: Case Closed Bonus";
 
 export const MUFFIN_REACTION_QUOTES = [
   "I was being special!",
@@ -74,7 +107,7 @@ export const ENCOURAGEMENT_MESSAGES: CharacterMessage[] = [
   { character: "bingo", name: "Bingo", message: "You're doing great." },
   { character: "muffin", name: "Muffin", message: "MORE CHAOS." },
   { character: "muffin", name: "Muffin", message: "I approve of this snack energy." },
-  { character: "buginspector", name: "Bug Inspector", message: "No bugs detected in your effort today." },
+  { character: "buginspector", name: "Bug Inspector Muffin", message: "No bugs detected in your effort today." },
 ];
 
 export const FLARE_MESSAGES = [

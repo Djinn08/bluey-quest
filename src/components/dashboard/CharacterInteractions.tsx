@@ -64,13 +64,14 @@ export function CharacterInteractions() {
               }`}
               aria-label={`Talk to ${character.name}`}
             >
-              <div className="relative h-16 w-16 overflow-hidden rounded-2xl bg-white ring-2 ring-sky-200">
+              <div className="relative h-24 w-24">
                 <CharacterImage
                   src={character.image}
                   fallback={character.imageFallback}
                   alt={character.name}
-                  fill
-                  sizes="64px"
+                  width={96}
+                  height={96}
+                  className="object-contain"
                 />
               </div>
               <span className="text-xs font-bold text-sky-800">{character.name}</span>

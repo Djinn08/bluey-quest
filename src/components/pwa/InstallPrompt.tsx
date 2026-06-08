@@ -39,7 +39,9 @@ export function InstallPrompt() {
 
   return (
     <div className="rounded-2xl bg-sky-100/90 px-4 py-3 ring-1 ring-sky-200">
-      <p className="text-sm font-medium text-sky-900">Install Bluey Quest on your home screen!</p>
+      <p className="text-sm font-medium text-sky-900">
+        Install Bluey Quest on your home screen — look for the Dollarbuck icon!
+      </p>
       <div className="mt-2 flex gap-2">
         <Button size="md" onClick={handleInstall}>
           Install
