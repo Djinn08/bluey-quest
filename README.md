@@ -8,6 +8,154 @@ Inspired by cozy, playful energy.
 Bluey assets permitted.  
 Must be removed before any public release.
 
+## Current Project Status (June 2026)
+
+### Working Features
+
+#### Authentication
+
+- ✅ Supabase Authentication
+- ✅ Account Creation
+- ✅ Email Verification
+- ✅ Login
+- ✅ Session Persistence
+- ✅ Protected Routes
+
+#### Core Habit Tracking
+
+- ✅ Daily Action Buttons
+- ✅ Dollarbucks Rewards
+- ✅ Daily Reset Logic
+- ✅ Flare Day Mode
+- ✅ Transaction Recording
+- ✅ Transaction History
+
+#### Food Tracking
+
+- ✅ Food Logging
+- ✅ Timestamp Recording
+- ✅ Food History
+- ✅ CSV Export
+
+#### Personalization
+
+- ✅ Bluey Theme
+- ✅ Bingo Theme
+- ✅ Muffin Theme
+- ✅ Theme Persistence
+- ✅ Profile Settings
+
+#### Character System
+
+- ✅ Bluey Interactions
+- ✅ Bingo Interactions
+- ✅ Muffin Interactions
+- ✅ Character Quotes
+- ✅ Character Animations
+- ✅ Character Sound Support
+
+#### Bug Inspector System
+
+- ✅ Bug Inspector Muffin
+- ✅ Bug Reporting
+- ✅ Senior Bug Inspector Achievement
+- ✅ Achievement Reward System
+
+#### Easter Eggs
+
+- ✅ Sneak Peek System
+- ✅ Muffin Mode
+- ✅ Flamingo Queen Event
+
+#### Deployment
+
+- ✅ GitHub Repository
+- ✅ Vercel Deployment
+- ✅ Supabase Database
+- ✅ Environment Variables Configured
+
+#### PWA
+
+- ✅ Dollarbuck App Icon Assets
+- ✅ Manifest Configuration
+- ✅ Install Prompt
+- ✅ Splash Screen Assets
+
+### Testing Still Needed
+
+#### Authentication
+
+- ☐ Verify production login flow
+- ☐ Verify production signup flow
+- ☐ Verify password recovery flow
+
+#### Daily Systems
+
+- ☐ Midnight streak rollover testing
+- ☐ Consecutive day streak testing
+- ☐ Multi-day Flare Day testing
+
+#### Mobile Testing
+
+- ☐ Android Chrome
+- ☐ Samsung Internet
+- ☐ iPhone Safari
+- ☐ Tablet Layout
+
+#### PWA Testing
+
+- ☐ Install to Home Screen
+- ☐ Splash Screen Display
+- ☐ Dollarbuck Icon Display
+- ☐ Offline Behavior
+- ☐ Push Notification Support (future)
+
+#### Character Testing
+
+- ☐ Verify all PNG assets display correctly
+- ☐ Verify Muffin interactions
+- ☐ Verify Flamingo Queen trigger
+- ☐ Verify Bug Inspector flow
+
+### Immediate Next Tasks
+
+1. Verify production deployment is stable.
+2. Complete PWA install testing.
+3. Verify Dollarbuck icon appears correctly on devices.
+4. Verify splash screen behavior.
+5. Commit and push latest README updates.
+6. Create final Jaydan account.
+7. Install Bluey Quest on Jaydan's phone.
+8. Begin real-world testing.
+
+### Current Release Goal
+
+**Target Release:**  
+Private Jaydan Edition v0.1
+
+**Success Criteria:**
+
+- Authentication works.
+- Daily actions work.
+- Food logging works.
+- CSV export works.
+- Character interactions work.
+- Bug Inspector works.
+- Muffin Mode works.
+- Flamingo Queen works.
+- PWA installs correctly.
+- Jaydan can use the application independently.
+
+### Long-Term Vision
+
+Bluey Quest began as a private habit and symptom management tool designed specifically for someone living with chronic illness, fatigue, pain flares, and executive dysfunction.
+
+The long-term goal is to evolve the underlying system into a broader health-focused application that helps users build habits, track symptoms, reduce number fatigue, and celebrate progress through encouragement rather than punishment.
+
+The Jaydan Edition serves as the prototype and testing ground for future versions.
+
+---
+
 ## Tech Stack
 
 - Next.js 15 (App Router)
