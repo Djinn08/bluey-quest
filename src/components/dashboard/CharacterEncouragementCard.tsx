@@ -126,7 +126,7 @@ export function CharacterEncouragementCard({
         aria-label={`${COMPANION_NAMES[companion]} says: ${quote}. Tap for another quote.`}
       >
         <div
-          className="absolute -top-12 left-2 z-10 drop-shadow-lg transition-transform duration-300 group-active:scale-95"
+          className="absolute -top-12 left-[-7px] z-10 drop-shadow-lg transition-transform duration-300 group-active:scale-95"
           style={{ width: 135, height: 135 }}
         >
           <CharacterImage
