@@ -19,7 +19,7 @@ export async function isFlareDayActive(
 export async function activateFlareDay(
   supabase: SupabaseClient,
   userId: string,
-): Promise<{ alreadyActive: boolean }> {
+): Promise<{ alreadyActive: boolean; error?: string }> {
   const today = getTodayDateString();
 
   const { data: existing } = await supabase
@@ -33,10 +33,34 @@ export async function activateFlareDay(
     return { alreadyActive: true };
   }
 
-  await supabase.from("flare_days").insert({
+  const { error } = await supabase.from("flare_days").insert({
     user_id: userId,
     flare_date: today,
   });
 
+  if (error) {
+    return { alreadyActive: false, error: error.message };
+  }
+
   return { alreadyActive: false };
+}
+
+export async function deactivateFlareDay(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<{ wasActive: boolean; error?: string }> {
+  const today = getTodayDateString();
+
+  const { data, error } = await supabase
+    .from("flare_days")
+    .delete()
+    .eq("user_id", userId)
+    .eq("flare_date", today)
+    .select("id");
+
+  if (error) {
+    return { wasActive: false, error: error.message };
+  }
+
+  return { wasActive: (data?.length ?? 0) > 0 };
 }

@@ -6,6 +6,8 @@ export const ERRORS = {
   foodSave: "Could not save food entry. Please try again.",
   foodEmpty: "Please enter a food name.",
   actionAlreadyDone: "You already completed this today!",
+  flareSave: "Could not activate Flare Day. Please try again.",
+  flareEnd: "Could not end Flare Day. Please try again.",
   settingsSave: "Could not save settings. Please try again.",
   exportFailed: "Could not export your data. Please try again.",
   connection:
@@ -83,4 +85,25 @@ export function formatSettingsError(error: {
   }
 
   return ERRORS.settingsSave;
+}
+
+/** Flare Day — log server-side; expose detail in development */
+export function formatFlareError(
+  error: { message?: string; code?: string },
+  context: "activate" | "deactivate" = "activate",
+): string {
+  const detail = [error.message, error.code].filter(Boolean).join(" — ");
+  console.error("[Flare Day failed]", context, detail);
+
+  if (isDev && detail) {
+    return `Flare Day failed: ${detail}`;
+  }
+
+  if (error.code === "42501") {
+    return isDev
+      ? `Flare Day failed: missing RLS policy. Run supabase migrations for flare_days — ${detail}`
+      : context === "deactivate" ? ERRORS.flareEnd : ERRORS.flareSave;
+  }
+
+  return context === "deactivate" ? ERRORS.flareEnd : ERRORS.flareSave;
 }
