@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Muffin">
+  <defs>
+    <linearGradient id="muffin-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed7aa"/>
+      <stop offset="100%" stop-color="#fb923c"/>
+    </linearGradient>
+  </defs>
+  <circle cx="64" cy="64" r="58" fill="url(#muffin-bg)"/>
+  <ellipse cx="64" cy="72" rx="36" ry="32" fill="#fff7ed" stroke="#ea580c" stroke-width="3"/>
+  <circle cx="48" cy="62" r="6" fill="#1e293b"/>
+  <circle cx="80" cy="62" r="6" fill="#1e293b"/>
+  <path d="M52 82 Q64 92 76 82" fill="none" stroke="#ea580c" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="40" cy="48" r="8" fill="#fdba74" opacity="0.6"/>
+  <circle cx="88" cy="48" r="8" fill="#fdba74" opacity="0.6"/>
+</svg>

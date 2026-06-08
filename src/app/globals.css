@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+:root {
+  --background: #e0f2fe;
+  --foreground: #0c4a6e;
+  --sky-soft: #bae6fd;
+  --orange-warm: #fdba74;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.35s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+@keyframes bounce-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85) translateY(12px);
+  }
+  50% {
+    transform: scale(1.04) translateY(-4px);
+  }
+  70% {
+    transform: scale(0.98) translateY(2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.55s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+@keyframes complete-pop {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-complete-pop {
+  animation: complete-pop 0.45s ease-out;
+}
+
+@keyframes float-reward {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -48px);
+  }
+}
+
+.animate-float-reward {
+  animation: float-reward 1.4s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+.animate-confetti-fall {
+  animation: confetti-fall 2.5s ease-in forwards;
+}
+
+/* Theme variants — Jaydan Edition character themes */
+html[data-theme="bluey"] {
+  --background: #e0f2fe;
+  --foreground: #0c4a6e;
+  --sky-soft: #7dd3fc;
+  --orange-warm: #ffffff;
+}
+
+html[data-theme="bingo"] {
+  --background: #fff7ed;
+  --foreground: #9a3412;
+  --sky-soft: #fed7aa;
+  --orange-warm: #fef3c7;
+}
+
+html[data-theme="muffin"] {
+  --background: #faf5ff;
+  --foreground: #6b21a8;
+  --sky-soft: #e9d5ff;
+  --orange-warm: #fbcfe8;
+}
+
+@keyframes character-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-12px) scale(1.05);
+  }
+  50% {
+    transform: translateY(-4px) scale(1.02);
+  }
+  70% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+.animate-character-bounce {
+  animation: character-bounce 0.6s ease-out;
+}

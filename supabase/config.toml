@@ -1,0 +1,8 @@
+# Minimal Supabase local config — run `supabase link` for your remote project
+project_id = "bluey-quest"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
