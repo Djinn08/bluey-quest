@@ -30,7 +30,7 @@ export const THEMES: ThemeConfig[] = [
     id: "muffin",
     name: "Muffin Theme",
     emoji: "🐶",
-    characterImage: "/characters/muffin-default.webp",
+    characterImage: "/characters/muffin-default.png",
     characterImageFallback: "/characters/muffin-default.png",
     previewColors: ["#9333ea", "#e9d5ff", "#fbcfe8"],
   },

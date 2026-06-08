@@ -12,17 +12,19 @@ interface CharacterImageProps {
   fill?: boolean;
   width?: number;
   height?: number;
+  priority?: boolean;
 }
 
 export function CharacterImage({
   src,
   fallback,
   alt,
-  className = "object-cover",
+  className = "object-contain",
   sizes,
   fill,
   width,
   height,
+  priority = false,
 }: CharacterImageProps) {
   const [currentSrc, setCurrentSrc] = useState(src);
 
@@ -35,6 +37,7 @@ export function CharacterImage({
       {...imageProps}
       src={currentSrc}
       alt={alt}
+      priority={priority}
       className={className}
       onError={() => {
         if (currentSrc !== fallback) setCurrentSrc(fallback);

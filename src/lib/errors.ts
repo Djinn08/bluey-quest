@@ -1,4 +1,4 @@
-/** User-friendly error messages — never expose raw crashes */
+/** User-friendly error messages — never expose raw crashes in production */
 
 export const ERRORS = {
   notSignedIn: "Please sign in to continue.",
@@ -17,6 +17,8 @@ export const ERRORS = {
     "Account created! Please check your email to confirm your account.",
   generic: "Something went wrong. Please try again.",
 } as const;
+
+const isDev = process.env.NODE_ENV === "development";
 
 export function friendlyAuthError(error: {
   message?: string;
@@ -44,4 +46,35 @@ export function friendlyDbError(context: "action" | "food" | "settings" | "expor
     default:
       return ERRORS.generic;
   }
+}
+
+/** Settings-specific: log full error server-side; expose detail in development */
+export function formatSettingsError(error: {
+  message?: string;
+  code?: string;
+  details?: string;
+  hint?: string;
+}): string {
+  const parts = [error.message, error.code, error.details, error.hint].filter(Boolean);
+  const detail = parts.join(" — ");
+
+  console.error("[Settings save failed]", detail);
+
+  if (isDev && detail) {
+    return `Settings save failed: ${detail}`;
+  }
+
+  if (error.code === "23514") {
+    return isDev
+      ? `Settings save failed: theme constraint mismatch. Run migration 20250608200000_character_themes.sql — ${detail}`
+      : "Theme could not be saved. Database migration may be required.";
+  }
+
+  if (error.message?.includes("character_sounds_enabled")) {
+    return isDev
+      ? `Settings save failed: missing character_sounds_enabled column. Run migration 20250608200000_character_themes.sql — ${detail}`
+      : "Settings could not be saved. Database migration may be required.";
+  }
+
+  return ERRORS.settingsSave;
 }

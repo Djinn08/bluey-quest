@@ -1,43 +1,48 @@
-# Character Asset Registry (Jaydan Edition v0.2)
+# Character Asset Registry (Jaydan Edition v0.2.1)
 
-All images use transparency, `object-contain`, and no placeholder frames.
+**Pipeline rule:** Source files are copied byte-for-byte. No black-keying or dark-pixel removal.
+
+```bash
+npm run assets   # copy from Cursor assets folder
+npm run icons    # regenerate Dollarbuck PWA sizes
+```
 
 ## Bluey
 
-| File | Use |
-|------|-----|
-| `bluey-default.png` | Default encouragement, interactions |
-| `bluey-heart.png` | Flare Day, streak milestones |
-| `bluey-shock.png` | Special states (reserved) |
+| File | Source reference |
+|------|------------------|
+| `bluey-default.png` | Cartoon-Bluey-PNG-File |
+| `bluey-heart.png` | x363m6uj88291 |
+| `bluey-shock.png` | WB1008 |
 
 ## Bingo
 
-| File | Use |
-|------|-----|
-| `bingo-default.png` | Default encouragement |
-| `bingo-happy.png` | Daily task completed |
-| `bingo-balloon.png` | Special states (reserved) |
+| File | Source reference |
+|------|------------------|
+| `bingo-default.png` | BINGO-2 |
+| `bingo-happy.png` | happy_bingo |
+| `bingo-balloon.png` | l7f5dtw687id1 |
 
 ## Muffin
 
-| File | Use |
-|------|-----|
-| `muffin-default.webp` | Default encouragement (PNG fallback: `muffin-default.png`) |
-| `muffin-buginspector.png` | Bug Inspector FAB, modal, success, Senior Inspector |
-| `flamingo-queen.png` | Flamingo Queen unlocked state (Gladys) |
-| `muffin-flamingo-ride.png` | Flamingo Queen celebration modal |
+| File | Source reference |
+|------|------------------|
+| `muffin-default.png` | Muffin_1 (primary) |
+| `muffin-default.webp` | lossless WebP derivative |
+| `muffin-buginspector.png` | Muffin-Bluey-Colorful-Cartoon-Style-PNG-thumb |
+| `flamingo-queen.png` | GLADYS-FIX |
+| `muffin-flamingo-ride.png` | muffinFlamingoQueen |
+
+## Hero / Splash
+
+| File | Source reference |
+|------|------------------|
+| `bluey-bingo-hero.png` | bluey-with-bingo-friends-png-2 |
 
 ## App Icon
 
 | File | Use |
 |------|-----|
-| `../icons/blueydollarbuck.png` | Source for all PWA icons (`npm run icons`) |
+| `../icons/blueydollarbuck.png` | PWA icon source |
 
-## Processing
-
-```bash
-npm run assets   # copy + transparency from Cursor assets folder
-npm run icons    # regenerate icon sizes from Dollarbuck
-```
-
-Registry source of truth: `src/lib/characters/index.ts` → `CHARACTER_ASSETS`
+Registry: `src/lib/characters/index.ts` → `CHARACTER_ASSETS`

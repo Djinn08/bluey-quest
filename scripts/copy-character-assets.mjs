@@ -23,24 +23,12 @@ function findAsset(fragment) {
   return winPath(path.join(assetsDir, match));
 }
 
-async function stripBlackBackground(inputPath, outputPath) {
-  const image = sharp(winPath(inputPath)).ensureAlpha();
-  const { data, info } = await image.raw().toBuffer({ resolveWithObject: true });
-
-  for (let i = 0; i < data.length; i += 4) {
-    const r = data[i];
-    const g = data[i + 1];
-    const b = data[i + 2];
-    if (r < 40 && g < 40 && b < 40) {
-      data[i + 3] = 0;
-    }
-  }
-
-  await sharp(data, {
-    raw: { width: info.width, height: info.height, channels: 4 },
-  })
-    .png()
-    .toFile(outputPath);
+/** Copy source bytes unchanged — preserves alpha, pupils, outlines */
+function copyAsset(fragment, destName, dir = outDir) {
+  const src = findAsset(fragment);
+  const dest = path.join(dir, destName);
+  fs.copyFileSync(src, dest);
+  console.log(`Copied ${destName}`);
 }
 
 const copies = [
@@ -53,25 +41,17 @@ const copies = [
   ["Muffin_1", "muffin-default.png"],
   ["Muffin-Bluey-Colorful-Cartoon-Style-PNG-thumb", "muffin-buginspector.png"],
   ["GLADYS-FIX", "flamingo-queen.png"],
-  ["blueydollarbuck-74dd1e86", "blueydollarbuck.png", iconsDir],
   ["muffinFlamingoQueen", "muffin-flamingo-ride.png"],
+  ["bluey-with-bingo-friends-png-2", "bluey-bingo-hero.png"],
+  ["blueydollarbuck-74dd1e86", "blueydollarbuck.png", iconsDir],
 ];
 
 for (const [fragment, name, dir = outDir] of copies) {
-  const src = findAsset(fragment);
-  const dest = path.join(dir, name);
-  if (name.endsWith(".png") && dir === outDir) {
-    await stripBlackBackground(src, dest);
-    console.log(`Processed ${name}`);
-  } else if (name === "blueydollarbuck.png") {
-    await stripBlackBackground(src, dest);
-    console.log(`Processed icon source ${name}`);
-  } else {
-    fs.copyFileSync(src, dest);
-    console.log(`Copied ${name}`);
-  }
+  copyAsset(fragment, name, dir);
 }
 
-const muffinSrc = path.join(outDir, "muffin-default.png");
-await sharp(muffinSrc).webp({ quality: 90 }).toFile(path.join(outDir, "muffin-default.webp"));
-console.log("Generated muffin-default.webp");
+const muffinPng = path.join(outDir, "muffin-default.png");
+await sharp(winPath(muffinPng))
+  .webp({ lossless: true })
+  .toFile(path.join(outDir, "muffin-default.webp"));
+console.log("Generated muffin-default.webp (lossless)");

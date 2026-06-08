@@ -34,47 +34,45 @@ export function SplashScreen() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-sky-200 via-sky-50 to-amber-50 px-6 transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-gradient-to-b from-sky-100 via-sky-50 to-amber-50 px-8 transition-opacity duration-500 ${
         fadeOut ? "opacity-0" : "opacity-100"
       }`}
       aria-hidden
     >
+      {/* 1. Dollarbuck */}
       <CharacterImage
         src="/icons/blueydollarbuck.png"
         fallback="/icons/icon-192.png"
         alt="Bluey Quest Dollarbuck"
-        width={100}
-        height={100}
+        width={88}
+        height={88}
         className="object-contain drop-shadow-md"
+        priority
       />
 
-      <h1 className="mt-5 font-extrabold tracking-tight text-sky-900 text-4xl sm:text-5xl">
+      {/* 2. Bluey Quest */}
+      <h1 className="mt-4 font-extrabold tracking-tight text-sky-900 text-4xl sm:text-5xl">
         {APP_NAME}
       </h1>
 
-      <div className="mt-6 flex items-end justify-center gap-5">
+      {/* 3. Hero artwork — Bluey + Bingo piggyback */}
+      <div className="mt-6 w-full max-w-xs">
         <CharacterImage
-          src={CHARACTER_ASSETS.bluey.default}
+          src={CHARACTER_ASSETS.hero.blueyBingo}
           fallback={CHARACTER_ASSETS.bluey.default}
-          alt="Bluey"
-          width={110}
-          height={110}
-          className="object-contain"
-        />
-        <CharacterImage
-          src={CHARACTER_ASSETS.bingo.default}
-          fallback={CHARACTER_ASSETS.bingo.default}
-          alt="Bingo"
-          width={95}
-          height={95}
-          className="object-contain"
+          alt="Bluey and Bingo"
+          width={320}
+          height={280}
+          className="mx-auto h-auto w-full max-h-[280px] object-contain drop-shadow-lg"
+          priority
         />
       </div>
 
-      <div className="mt-6 space-y-1 text-center">
-        <p className="text-lg font-semibold text-sky-800">Healthy habits.</p>
-        <p className="text-lg font-semibold text-sky-800">Cozy rewards.</p>
-        <p className="text-lg font-semibold text-orange-700">One day at a time.</p>
+      {/* 4. Tagline */}
+      <div className="mt-6 space-y-0.5 text-center">
+        <p className="text-base font-semibold text-sky-800">Healthy habits.</p>
+        <p className="text-base font-semibold text-sky-800">Cozy rewards.</p>
+        <p className="text-base font-semibold text-orange-700">One day at a time.</p>
       </div>
     </div>
   );

@@ -20,11 +20,15 @@ export const CHARACTER_ASSETS = {
     balloon: "/characters/bingo-balloon.png",
   },
   muffin: {
-    default: "/characters/muffin-default.webp",
+    default: "/characters/muffin-default.png",
     defaultPng: "/characters/muffin-default.png",
+    defaultWebp: "/characters/muffin-default.webp",
     buginspector: "/characters/muffin-buginspector.png",
     flamingoQueen: "/characters/flamingo-queen.png",
     flamingoRide: "/characters/muffin-flamingo-ride.png",
+  },
+  hero: {
+    blueyBingo: "/characters/bluey-bingo-hero.png",
   },
 } as const;
 

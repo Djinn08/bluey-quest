@@ -181,8 +181,11 @@ File guide: [public/characters/ASSETS.md](./public/characters/ASSETS.md)
 | Bluey | `bluey-default`, `bluey-heart`, `bluey-shock` |
 | Bingo | `bingo-default`, `bingo-happy`, `bingo-balloon` |
 | Muffin | `muffin-default`, `muffin-buginspector`, `flamingo-queen`, `muffin-flamingo-ride` |
+| Hero | `bluey-bingo-hero` (splash) |
 
 **Global image rules:** transparency, `object-contain`, no circles/frames/borders.
+
+**Asset pipeline (v0.2.1):** `npm run assets` copies source files directly — no black-keying. Preserves pupils, outlines, and shadows.
 
 ## Companion Encouragement Card
 
@@ -309,7 +312,8 @@ Any daily action **or** food log counts toward the streak for that day.
 |---------|-------|
 | **v0.1** | Core Functionality |
 | **v0.15** | Notifications |
-| **v0.2** | PWA Completion + Flare Mode Expansion + Rewards Store *(in progress)* |
+| **v0.2** | PWA Completion + Flare Mode Expansion + Rewards Store |
+| **v0.2.1** | Asset pipeline fix, theme save diagnostics, splash redesign *(current)* |
 | **v0.3** | AI Analysis |
 | **v0.5** | Public Product Split |
 
@@ -436,6 +440,32 @@ Before Jaydan returns:
 - [ ] Core testing completed
 
 **Target:** Stable Jaydan Edition Release
+
+### v0.2.1 — Final Polish & Bugfix *(current)*
+
+#### Asset Pipeline Fix
+
+**Root cause:** `stripBlackBackground()` in `copy-character-assets.mjs` removed all dark pixels (RGB &lt; 40), destroying pupils, outlines, and facial detail.
+
+**Fix:** Direct byte-for-byte copy from source files. Lossless WebP only for `muffin-default.webp`. All character assets rebuilt.
+
+#### Theme Save Bug
+
+**Likely causes:** Missing migration `20250608200000_character_themes.sql` (theme constraint or `character_sounds_enabled` column).
+
+**Fix:** Development-mode error messages show exact Supabase failure. Fallback retry without `character_sounds_enabled` if column missing. Profile row existence verified after update.
+
+**Action required:** Run migration in Supabase SQL Editor if theme save still fails in production.
+
+#### Splash Screen Redesign
+
+Hierarchy: Dollarbuck → **Bluey Quest** → `bluey-bingo-hero.png` (piggyback) → tagline.
+
+#### Image Quality
+
+- `CharacterImage` defaults to `object-contain`
+- No CSS filters on character art
+- Encouragement card mascot overlap preserved
 
 #### Flare Mode Expansion + Rewards Store (planned)
 
