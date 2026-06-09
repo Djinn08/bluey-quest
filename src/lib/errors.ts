@@ -8,6 +8,9 @@ export const ERRORS = {
   actionAlreadyDone: "You already completed this today!",
   flareSave: "Could not activate Flare Day. Please try again.",
   flareEnd: "Could not end Flare Day. Please try again.",
+  moodSave: "Could not save your check-in. Please try again.",
+  moodScoreInvalid: "Please choose a mood between 1 and 10.",
+  moodNotesTooLong: "Notes must be 1000 characters or fewer.",
   settingsSave: "Could not save settings. Please try again.",
   exportFailed: "Could not export your data. Please try again.",
   connection:
@@ -35,12 +38,16 @@ export function friendlyAuthError(error: {
   return ERRORS.generic;
 }
 
-export function friendlyDbError(context: "action" | "food" | "settings" | "export"): string {
+export function friendlyDbError(
+  context: "action" | "food" | "mood" | "settings" | "export",
+): string {
   switch (context) {
     case "action":
       return ERRORS.actionSave;
     case "food":
       return ERRORS.foodSave;
+    case "mood":
+      return ERRORS.moodSave;
     case "settings":
       return ERRORS.settingsSave;
     case "export":
@@ -106,4 +113,31 @@ export function formatFlareError(
   }
 
   return context === "deactivate" ? ERRORS.flareEnd : ERRORS.flareSave;
+}
+
+/** Mood check-in — log server-side; expose detail in development */
+export function formatMoodError(error: {
+  message?: string;
+  code?: string;
+}): string {
+  const detail = [error.message, error.code].filter(Boolean).join(" — ");
+  console.error("[Mood check-in failed]", detail);
+
+  if (isDev && detail) {
+    return `Mood check-in failed: ${detail}`;
+  }
+
+  if (error.code === "42501") {
+    return isDev
+      ? `Mood check-in failed: missing RLS policy. Run supabase/RUN_MOOD_AND_ANALYTICS_IN_SQL_EDITOR.sql — ${detail}`
+      : ERRORS.moodSave;
+  }
+
+  if (error.message?.includes("daily_entries")) {
+    return isDev
+      ? `Mood check-in failed: daily_entries table missing. Run supabase/RUN_MOOD_AND_ANALYTICS_IN_SQL_EDITOR.sql — ${detail}`
+      : ERRORS.moodSave;
+  }
+
+  return ERRORS.moodSave;
 }

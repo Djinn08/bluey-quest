@@ -3,14 +3,17 @@ import { CharacterEncouragementCard } from "@/components/dashboard/CharacterEnco
 import { CharacterPopup } from "@/components/dashboard/CharacterPopup";
 import { FlareModeButton } from "@/components/dashboard/FlareModeButton";
 import { LogFoodSection } from "@/components/dashboard/LogFoodSection";
+import { MoodCheckInSection } from "@/components/dashboard/MoodCheckInSection";
 import { StatsBanner } from "@/components/dashboard/StatsBanner";
 import { StreakMessage } from "@/components/dashboard/StreakMessage";
 import { SneakPeekButton } from "@/components/easter-egg/SneakPeekProvider";
 import { InstallPrompt } from "@/components/pwa/InstallPrompt";
 import { pickRandom, FLARE_MESSAGES } from "@/lib/characters";
 import { isFlareDayActive } from "@/lib/game/flare-service";
+import { getDailyEntryForDate } from "@/lib/game/mood-service";
 import { ensureStreakCurrent } from "@/lib/game/streak-service";
 import { getStreakMultiplier } from "@/lib/streak";
+import { hasCompletedCheckInToday } from "@/lib/features/mood-tracking";
 import { getTodayDateString } from "@/lib/streak";
 import { createClient } from "@/lib/supabase/server";
 import type { DailyActionType } from "@/lib/types/database";
@@ -27,21 +30,24 @@ export default async function DashboardPage() {
   const flareActive = await isFlareDayActive(supabase, user.id, today);
   const { wasReset } = await ensureStreakCurrent(supabase, user.id);
 
-  const [{ data: profile }, { data: streak }, { data: actions }] = await Promise.all([
-    supabase.from("profiles").select("dollarbucks_balance").eq("id", user.id).single(),
-    supabase.from("streaks").select("current_streak_days").eq("user_id", user.id).single(),
-    supabase
-      .from("daily_actions")
-      .select("action_type")
-      .eq("user_id", user.id)
-      .eq("action_date", today),
-  ]);
+  const [{ data: profile }, { data: streak }, { data: actions }, dailyEntry] =
+    await Promise.all([
+      supabase.from("profiles").select("dollarbucks_balance").eq("id", user.id).single(),
+      supabase.from("streaks").select("current_streak_days").eq("user_id", user.id).single(),
+      supabase
+        .from("daily_actions")
+        .select("action_type")
+        .eq("user_id", user.id)
+        .eq("action_date", today),
+      getDailyEntryForDate(supabase, user.id, today),
+    ]);
 
   const streakDays = streak?.current_streak_days ?? 0;
   const multiplier = getStreakMultiplier(streakDays);
   const completedToday = (actions ?? []).map(
     (a) => a.action_type as DailyActionType,
   );
+  const checkInCompleteToday = hasCompletedCheckInToday(dailyEntry?.mood_score);
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -78,6 +84,16 @@ export default async function DashboardPage() {
         </p>
         <ActionGrid completedToday={completedToday} />
       </section>
+
+      {!checkInCompleteToday && (
+        <section>
+          <h2 className="text-theme mb-1 text-lg font-bold">Daily Check-In</h2>
+          <p className="text-theme-muted mb-3 text-sm">
+            A quick mood note — no pressure, just however today feels.
+          </p>
+          <MoodCheckInSection />
+        </section>
+      )}
 
       <section>
         <h2 className="text-theme mb-3 text-lg font-bold">Food Log</h2>

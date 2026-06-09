@@ -43,6 +43,26 @@ export interface FoodEntry {
   entry_date: string;
 }
 
+/** One journal check-in per user per day — mood_notes is the optional notes field */
+export interface DailyEntry {
+  id: string;
+  user_id: string;
+  /** Calendar date for this check-in (maps to DB entry_date) */
+  entry_date: string;
+  mood_score: number | null;
+  mood_notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AnalyticsEvent {
+  id: string;
+  user_id: string;
+  event_name: string;
+  metadata: Record<string, unknown>;
+  created_at: string;
+}
+
 export interface Transaction {
   id: string;
   user_id: string;

@@ -54,39 +54,47 @@ export function CharacterPopup() {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-24 z-50 flex justify-center px-4">
-      <div
-        role="dialog"
-        aria-labelledby="character-popup-title"
-        className={`pointer-events-auto w-full max-w-sm rounded-3xl bg-white p-5 shadow-2xl ring-2 ring-sky-200 transition-opacity duration-300 ${
-          phase === "visible" ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <div className="flex flex-col items-center text-center">
-          <div className="relative mx-auto h-32 w-32">
-            <CharacterImage
-              src={character.image}
-              fallback={character.imageFallback}
-              alt={entry.name}
-              width={128}
-              height={128}
-              className="object-contain drop-shadow-sm"
-            />
-          </div>
-          <h2 id="character-popup-title" className="mt-3 text-lg font-extrabold text-sky-900">
-            {entry.name}
-          </h2>
-          <p className="mt-1 text-sm font-medium text-sky-800">{entry.message}</p>
-          <div className="mt-4 flex w-full gap-2">
-            <Button variant="primary" fullWidth onClick={close}>
-              Continue Adventure
-            </Button>
-            <button
-              type="button"
-              className="min-h-12 rounded-2xl px-4 text-sm font-semibold text-sky-600 hover:bg-sky-50"
-              onClick={close}
-            >
-              Dismiss
-            </button>
+      <div className="pointer-events-auto relative w-full max-w-sm">
+        <div
+          className="absolute -top-10 left-1/2 z-10 h-28 w-28 -translate-x-1/2"
+          aria-hidden
+        >
+          <CharacterImage
+            src={character.image}
+            fallback={character.imageFallback}
+            alt=""
+            width={112}
+            height={112}
+            className="h-full w-full object-contain drop-shadow-lg"
+          />
+        </div>
+
+        <div
+          role="dialog"
+          aria-labelledby="character-popup-title"
+          className={`rounded-3xl bg-white px-5 pb-5 pt-16 shadow-2xl ring-2 ring-sky-200 transition-opacity duration-300 ${
+            phase === "visible" ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="flex flex-col items-center gap-3 text-center">
+            <div className="w-full">
+              <h2 id="character-popup-title" className="text-lg font-extrabold text-sky-900">
+                {entry.name}
+              </h2>
+              <p className="mt-1 text-sm font-medium text-sky-800">{entry.message}</p>
+            </div>
+            <div className="mt-1 flex w-full gap-2">
+              <Button variant="primary" fullWidth onClick={close}>
+                Continue Adventure
+              </Button>
+              <button
+                type="button"
+                className="min-h-12 shrink-0 rounded-2xl px-4 text-sm font-semibold text-sky-600 hover:bg-sky-50"
+                onClick={close}
+              >
+                Dismiss
+              </button>
+            </div>
           </div>
         </div>
       </div>

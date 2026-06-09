@@ -36,6 +36,12 @@ export interface AnalysisPackage {
     itemName: string;
     cost: number;
   }[];
+  dailyEntries: {
+    date: string;
+    moodScore: number | null;
+    moodNotes: string | null;
+    updatedAt: string;
+  }[];
   /** Reserved for future AI analysis endpoint */
   aiAnalysisReady: boolean;
 }
@@ -52,6 +58,7 @@ export async function buildAnalysisPackage(
     { data: transactions },
     { data: flareDays },
     { data: redemptions },
+    { data: dailyEntries },
   ] = await Promise.all([
     supabase
       .from("profiles")
@@ -64,6 +71,7 @@ export async function buildAnalysisPackage(
     supabase.from("transactions").select("*").eq("user_id", userId).order("created_at", { ascending: true }),
     supabase.from("flare_days").select("*").eq("user_id", userId).order("flare_date", { ascending: true }),
     supabase.from("store_redemptions").select("*").eq("user_id", userId).order("created_at", { ascending: true }),
+    supabase.from("daily_entries").select("*").eq("user_id", userId).order("entry_date", { ascending: true }),
   ]);
 
   return {
@@ -103,6 +111,12 @@ export async function buildAnalysisPackage(
       timestamp: r.created_at,
       itemName: r.item_name,
       cost: r.cost,
+    })),
+    dailyEntries: (dailyEntries ?? []).map((e) => ({
+      date: e.entry_date,
+      moodScore: e.mood_score,
+      moodNotes: e.mood_notes,
+      updatedAt: e.updated_at,
     })),
     aiAnalysisReady: true,
   };
