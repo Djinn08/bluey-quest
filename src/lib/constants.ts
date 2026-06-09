@@ -22,5 +22,8 @@ export const ACTION_LABELS: Record<DailyActionType, string> = {
 
 export const DAILY_ACTION_TYPES = Object.keys(ACTION_REWARDS) as DailyActionType[];
 
+export const MOOD_CHECK_IN_REWARD = 10;
+export const MOOD_CHECK_IN_LABEL = "Daily Check-In";
+
 export const STREAK_RESET_MESSAGE =
   "Tomorrow is a great day to start another Keepy Uppy streak!";

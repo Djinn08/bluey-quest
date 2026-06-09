@@ -13,6 +13,7 @@ import { isFlareDayActive } from "@/lib/game/flare-service";
 import { getDailyEntryForDate } from "@/lib/game/mood-service";
 import { ensureStreakCurrent } from "@/lib/game/streak-service";
 import { getStreakMultiplier } from "@/lib/streak";
+import { MOOD_CHECK_IN_REWARD } from "@/lib/constants";
 import { hasCompletedCheckInToday } from "@/lib/features/mood-tracking";
 import { getTodayDateString } from "@/lib/streak";
 import { createClient } from "@/lib/supabase/server";
@@ -89,7 +90,8 @@ export default async function DashboardPage() {
         <section>
           <h2 className="text-theme mb-1 text-lg font-bold">Daily Check-In</h2>
           <p className="text-theme-muted mb-3 text-sm">
-            A quick mood note — no pressure, just however today feels.
+            A quick mood note — no pressure, just however today feels. Earn{" "}
+            {MOOD_CHECK_IN_REWARD} Dollarbucks when you check in!
           </p>
           <MoodCheckInSection />
         </section>

@@ -1,9 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { saveMoodCheckIn } from "@/app/actions/mood";
 import { Button } from "@/components/ui/Button";
+import { FloatingReward } from "@/components/ui/FloatingReward";
 import {
   getNotesCounterClass,
   MOOD_FACE_OPTIONS,
@@ -15,7 +16,9 @@ export function MoodCheckInSection() {
   const [selectedScore, setSelectedScore] = useState<number | null>(null);
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState<string | null>(null);
+  const [floatingReward, setFloatingReward] = useState<number | null>(null);
   const [pending, startTransition] = useTransition();
+  const clearFloating = useCallback(() => setFloatingReward(null), []);
 
   const notesLength = notes.length;
   const notesRemaining = MOOD_NOTES_MAX - notesLength;
@@ -30,6 +33,9 @@ export function MoodCheckInSection() {
     startTransition(async () => {
       const result = await saveMoodCheckIn(selectedScore, notes);
       if (result.success) {
+        if (result.rewardEarned > 0) {
+          setFloatingReward(result.rewardEarned);
+        }
         router.refresh();
       } else {
         setMessage(result.error);
@@ -39,7 +45,10 @@ export function MoodCheckInSection() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="relative space-y-4">
+      {floatingReward !== null && (
+        <FloatingReward amount={floatingReward} onDone={clearFloating} />
+      )}
       {message && (
         <p
           className={`animate-fade-in text-center text-sm font-medium ${
